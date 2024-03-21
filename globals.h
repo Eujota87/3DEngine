@@ -11,15 +11,23 @@ extern float fov;
 extern float aspectRatio;
 extern float fovRad;
 
+extern Mesh* my_meshRotated;
+ 
+
+extern Matrix4 projectionMatrix;
+extern Matrix4 rotationMatrix_X;
+extern Matrix4 rotationMatrix_Y;
+extern Matrix4 rotationMatrix_Z;
+
+//------------------------------------------------------------------------------
 //TESTING
-extern Vector3 ponto1;
-extern Vector3 ponto2;
-extern Vector3 ponto3;
-extern Triangle tri1;
-extern Triangle tri2;
-extern Triangle tri3;
-extern Triangle tri4;
-extern Matrix4 mat1;
-extern Matrix4 rotationMat1;
-extern Matrix4 rotationMat2;
+
+extern float moveX;
+extern float moveY;
+extern float moveZ;
+extern float rotateX;
+extern float rotateY;
+extern float rotateZ;
+
+//------------------------------------------------------------------------------
 

@@ -1,6 +1,6 @@
 #ifndef RENDER
 #define RENDER
 
-void render();
+void render(Mesh* my_meshProjected);
 
 #endif

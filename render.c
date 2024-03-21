@@ -6,9 +6,10 @@
 #include "./tad.h"
 #include "./render.h"
 
-void RenderTriangle(Triangle tri);
+void RenderTriangle(Triangle triangle);
+void RenderMesh(Mesh* mesh);
 
-void render() {
+void render(Mesh* my_meshProjected) {
     
     //render black screen
     SDL_SetRenderDrawColor(my_renderer, 50, 50, 50, 255);
@@ -16,27 +17,46 @@ void render() {
 
     SDL_SetRenderDrawColor(my_renderer, 255, 50, 50, 255);
     
-    //TESTING
-
-    /*SDL_RenderDrawPoint(my_renderer, ponto1.x, ponto1.y);
-    SDL_RenderDrawPoint(my_renderer, ponto2.x, ponto2.y);
-    SDL_RenderDrawPoint(my_renderer, ponto3.x, ponto3.y);*/
-
-    RenderTriangle(tri4);
+    RenderMesh(my_meshProjected);
    
     SDL_RenderPresent(my_renderer); //swap buffer
 
 }
 
-void RenderTriangle(Triangle tri) {
+void RenderTriangle(Triangle triangle) {
+    Vector2 v1, v2, v3;
+    
+    v1.x = triangle.vertex[0].x;
+    v1.y = triangle.vertex[0].y;
+    v2.x = triangle.vertex[1].x;
+    v2.y = triangle.vertex[1].y;
+    v3.x = triangle.vertex[2].x;
+    v3.y = triangle.vertex[2].y;
+    
+    v1.x += 1.0f;
+    v1.y += 1.0f;
+    v2.x += 1.0f;
+    v2.y += 1.0f;
+    v3.x += 1.0f;
+    v3.y += 1.0f;
+
+    v1.x *= 0.5f * (float)WINDOW_WIDTH;
+    v1.y *= 0.5f * (float)WINDOW_HEIGHT;
+    v2.x *= 0.5f * (float)WINDOW_WIDTH;
+    v2.y *= 0.5f * (float)WINDOW_HEIGHT;
+    v3.x *= 0.5f * (float)WINDOW_WIDTH;
+    v3.y *= 0.5f * (float)WINDOW_HEIGHT; 
+
     SDL_Point p1, p2, p3;
     
-    p1.x = tri.point[0].x + WINDOW_WIDTH/2;
-    p1.y = tri.point[0].y + WINDOW_HEIGHT/2 - 2*tri.point[0].y;
-    p2.x = tri.point[1].x + WINDOW_WIDTH/2;
-    p2.y = tri.point[1].y + WINDOW_HEIGHT/2 - 2*tri.point[1].y;
-    p3.x = tri.point[2].x + WINDOW_WIDTH/2;
-    p3.y = tri.point[2].y + WINDOW_HEIGHT/2 - 2*tri.point[2].y;
+    p1.x = v1.x;
+    p1.y = v1.y;
+    p2.x = v2.x;
+    p2.y = v2.y;
+    p3.x = v3.x;
+    p3.y = v3.y;
+
+
 
     SDL_Point points[4] = {p1, p2, p3, p1};
 
@@ -46,4 +66,13 @@ void RenderTriangle(Triangle tri) {
         4
     );
 }
+
+void RenderMesh(Mesh* mesh) {
+    int triangleCount = mesh->triangleCount; 
+    for(int i = 0; i < triangleCount; i++) {
+        RenderTriangle(mesh->triangle[i]);
+    }
+}
+
+
 

@@ -5,4 +5,4 @@
 #define WINDOW_HEIGHT 600
 
 #define FPS 30
-#define FRAME_TARGET_TIME (1000 / FPS) // the target time for each frame in miliseconds (1 second (1000 ms) divided by the FPS)
+#define FRAME_TARGET_TIME (1000 / FPS) // the target time for each frame in miliseconds (1000ms divided by the FPS)

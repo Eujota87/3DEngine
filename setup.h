@@ -1,7 +1,7 @@
 #ifndef SETUP
 #define SETUP
 
-void setup();
+void setup(Mesh** my_mesh, Mesh** my_meshProjected);
 
 #endif
 

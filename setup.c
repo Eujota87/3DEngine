@@ -1,13 +1,18 @@
 #include <stdio.h>
 #include <SDL2/SDL.h>
+#include <stdlib.h>
+#include <string.h>
 #include <math.h>
 
 #include "./constants.h"
+#include "import_mesh.h"
 #include "./globals.h"
 #include "./tad.h"
 #include "./setup.h"
 
-void setup() {
+
+
+void setup(Mesh** my_mesh, Mesh** my_meshProjected) {
 
     near = 0.1f;
     far = 1000.0f;
@@ -15,28 +20,31 @@ void setup() {
     aspectRatio = (float)WINDOW_HEIGHT / (float)WINDOW_WIDTH;
     fovRad = 1.0f / tanf(fov * 0.5f / 180.0f * 3.14159f);
 
+    projectionMatrix.m[0][0] = aspectRatio * fovRad;
+    projectionMatrix.m[1][1] = fovRad;
+    projectionMatrix.m[2][2] = far / (far-near);
+    projectionMatrix.m[2][3] = (-far * near) / (far-near);
+    projectionMatrix.m[3][2] = 1.0f;
+    projectionMatrix.m[3][3] = 0;
+
+    
+    //-----------------------------------------------------------------------------
     //TESTING
-
-    ponto1.x = -200;
-    ponto1.y = 0;
-    ponto1.z = 10;
-    ponto2.x = 200;
-    ponto2.y = 0;
-    ponto2.z = 10;
-    ponto3.x = 0;
-    ponto3.y = 200;
-    ponto3.z = 10;
-
-    tri1.point[0] = ponto1;
-    tri1.point[1] = ponto2;
-    tri1.point[2] = ponto3;
-
-    mat1.m[0][0] = aspectRatio * fovRad;
-    mat1.m[1][1] = fovRad;
-    mat1.m[2][2] = far / (far-near);
-    mat1.m[2][3] = (-far * near) / (far-near);
-    mat1.m[3][2] = 1;
     
+    *my_mesh = ImportMesh();
+    //PrintMeshData(*my_mesh);
+    
+    *my_meshProjected = CreateMesh((*my_mesh)->triangleCount);
+    my_meshRotated = CreateMesh((*my_mesh)->triangleCount);
+
 
     
+    fprintf(
+        stderr, 
+        "%f, triCount: %i\n", 
+        (*my_mesh)->triangle[0].vertex[0].x, 
+        (*my_mesh)->triangleCount
+    );
+    //-----------------------------------------------------------------------------
 }
+

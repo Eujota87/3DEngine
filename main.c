@@ -1,6 +1,7 @@
 #include <stdio.h>
 #include <SDL2/SDL.h>
-
+#include <stdlib.h>
+#include <string.h>
 
 #include "./constants.h"
 #include "./globals.h"
@@ -14,6 +15,9 @@
 SDL_Window* my_window = NULL;
 SDL_Renderer* my_renderer = NULL;
 int game_is_running = FALSE;
+Mesh* my_mesh = NULL;
+Mesh* my_meshRotated = NULL;
+Mesh* my_meshProjected = NULL;
 
 float near;
 float far;
@@ -21,36 +25,37 @@ float fov;
 float aspectRatio;
 float fovRad;
 
-//------------------------------------------------------------------------------
+Matrix4 projectionMatrix;
 
+Matrix4 rotationMatrix_X;
+Matrix4 rotationMatrix_Y;
+Matrix4 rotationMatrix_Z;
+
+//------------------------------------------------------------------------------
 //TESTING
 
-Vector3 ponto1;
-Vector3 ponto2;
-Vector3 ponto3;
+float moveX = 0;
+float moveY = 0;
+float moveZ = 0;
+float rotateX = 0;
+float rotateY = 0;
+float rotateZ = 0;
 
-Triangle tri1;
-Triangle tri2;
-Triangle tri3;
-Triangle tri4;
+//------------------------------------------------------------------------------
 
-Matrix4 mat1;
-
-Matrix4 rotationMat1;
-Matrix4 rotationMat2;
 
 int main() {
     
     game_is_running  = initialize_window(&my_window, &my_renderer);
     
-    setup();
+    setup(&my_mesh, &my_meshProjected);
 
     while(game_is_running) {
         process_input();
-        update();
-        render();
+        update(my_mesh, my_meshProjected);
+        render(my_meshProjected);
     }
-
+    
     destroy_window(my_window, my_renderer);
 
     return 0;

@@ -1,6 +1,6 @@
 #ifndef UPDATE
 #define UPDATE
 
-void update();
+void update(Mesh* my_mesh, Mesh* my_meshProjected);
 
 #endif

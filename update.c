@@ -7,10 +7,20 @@
 #include "./update.h"
 
 int last_frame_time = 0;
-float theta;
 
+//-----------------------------------------------------------------------------
+//TESTING
+float thetaX;
+float thetaY;
+//-----------------------------------------------------------------------------
 
-void update() {
+Triangle ProjectTriangle(Triangle triangleIn, Matrix4 matrix);
+void ProjectMesh(Mesh* meshIn, Mesh* meshOut, Matrix4 matrix);
+
+void MoveMesh(Mesh* mesh, float delta_time);
+void RotateMesh(Mesh* mesh);
+
+void update(Mesh* my_mesh, Mesh* my_meshProjected) {
     
     //caping frame rate
     int time_to_wait = FRAME_TARGET_TIME - (SDL_GetTicks() - last_frame_time);
@@ -23,36 +33,62 @@ void update() {
 
     last_frame_time = SDL_GetTicks();
 
-//-------------------------------------------------------------------------------------
-    
+    //-------------------------------------------------------------------------------------
     //TESTING
 
-    theta += 1.0f * delta_time;
-
+    thetaY += 0.4*delta_time;
     //rotation y
-    rotationMat1.m[0][0] = cosf(theta);
-	rotationMat1.m[0][2] = sinf(theta);
-	rotationMat1.m[2][0] = -sinf(theta);
-	rotationMat1.m[2][2] = cosf(theta);
-	rotationMat1.m[1][1] = 1;
+    rotationMatrix_Y.m[0][0] = cosf(thetaY);
+	rotationMatrix_Y.m[0][2] = sinf(thetaY);
+	rotationMatrix_Y.m[2][0] = -sinf(thetaY);
+	rotationMatrix_Y.m[2][2] = cosf(thetaY);
+	rotationMatrix_Y.m[1][1] = 1;
 
-    //rotation z
-    rotationMat2.m[0][0] = cosf(theta/2);
-	rotationMat2.m[0][1] = -sinf(theta/2);
-	rotationMat2.m[1][0] = sinf(theta/2);
-	rotationMat2.m[1][1] = cosf(theta/2);
-	rotationMat2.m[2][2] = 1;
+    //RotateMesh(my_mesh);
 
-    tri2.point[0] = MulMatrix4Vector3(tri1.point[0], rotationMat1);
-    tri2.point[1] = MulMatrix4Vector3(tri1.point[1], rotationMat1);
-    tri2.point[2] = MulMatrix4Vector3(tri1.point[2], rotationMat1);
+    MoveMesh(my_mesh, delta_time);
     
-    tri3.point[0] = MulMatrix4Vector3(tri2.point[0], rotationMat2);
-    tri3.point[1] = MulMatrix4Vector3(tri2.point[1], rotationMat2);
-    tri3.point[2] = MulMatrix4Vector3(tri2.point[2], rotationMat2);
-    
-    tri4.point[0] = MulMatrix4Vector3(tri3.point[0], mat1);
-    tri4.point[1] = MulMatrix4Vector3(tri3.point[1], mat1);
-    tri4.point[2] = MulMatrix4Vector3(tri3.point[2], mat1);
+    ProjectMesh(my_mesh, my_meshProjected,projectionMatrix);
 
+    if(rotateX != 0) PrintMeshData(my_mesh);
+    if(rotateY != 0) PrintMeshData(my_meshProjected);
+
+    //-----------------------------------------------------------------------------
 }
+
+Triangle ProjectTriangle(Triangle triangleIn, Matrix4 matrix) {
+    Triangle triangleOut;
+    for(int i = 0; i < 3; i++) {
+        triangleOut.vertex[i] = MulMatrix4Vector3(triangleIn.vertex[i], matrix);
+    }
+    return triangleOut;
+}
+
+void ProjectMesh(Mesh* meshIn, Mesh* meshOut, Matrix4 matrix) {
+    for(int i = 0; i < meshIn->triangleCount; i++) {
+        meshOut->triangle[i] = ProjectTriangle(meshIn->triangle[i], matrix);
+    }
+}
+
+void MoveMesh(Mesh* mesh, float delta_time) {
+    for(int i = 0; i < mesh->triangleCount; i++) {
+        mesh->triangle[i].vertex[0].x += 0.5 * moveX * delta_time;
+        mesh->triangle[i].vertex[0].y += 0.5 * moveY * delta_time;
+        mesh->triangle[i].vertex[0].z += 0.5 * moveZ * delta_time;
+        mesh->triangle[i].vertex[1].x += 0.5 * moveX * delta_time;
+        mesh->triangle[i].vertex[1].y += 0.5 * moveY * delta_time;
+        mesh->triangle[i].vertex[1].z += 0.5 * moveZ * delta_time;
+        mesh->triangle[i].vertex[2].x += 0.5 * moveX * delta_time;
+        mesh->triangle[i].vertex[2].y += 0.5 * moveY * delta_time;
+        mesh->triangle[i].vertex[2].z += 0.5 * moveZ * delta_time;
+    }
+}
+
+void RotateMesh(Mesh* mesh) {
+    for(int i = 0; i < mesh->triangleCount; i++) {
+        for(int j = 0; j < 3; j++) {
+            my_meshRotated->triangle[i].vertex[j] = MulMatrix4Vector3(mesh->triangle[i].vertex[j], rotationMatrix_Y);
+        }
+    }
+}
+
