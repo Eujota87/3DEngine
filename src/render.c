@@ -3,7 +3,7 @@
 
 #include "./constants.h"
 #include "./globals.h"
-#include "./tad.h"
+#include "./abstract_data_types.h"
 #include "./render.h"
 
 void RenderTriangle(Triangle triangle);
@@ -15,7 +15,7 @@ void render(Mesh* my_meshProjected) {
     SDL_SetRenderDrawColor(my_renderer, 50, 50, 50, 255);
     SDL_RenderClear(my_renderer);
 
-    SDL_SetRenderDrawColor(my_renderer, 255, 50, 50, 255);
+    SDL_SetRenderDrawColor(my_renderer, 0, 255, 50, 155);
     
     RenderMesh(my_meshProjected);
    
@@ -33,19 +33,19 @@ void RenderTriangle(Triangle triangle) {
     v3.x = triangle.vertex[2].x;
     v3.y = triangle.vertex[2].y;
     
-    v1.x += 1.0f;
-    v1.y += 1.0f;
-    v2.x += 1.0f;
-    v2.y += 1.0f;
-    v3.x += 1.0f;
-    v3.y += 1.0f;
+    v1.x += 1.0F;
+    v1.y += 1.0F;
+    v2.x += 1.0F;
+    v2.y += 1.0F;
+    v3.x += 1.0F;
+    v3.y += 1.0F;
 
-    v1.x *= 0.5f * (float)WINDOW_WIDTH;
-    v1.y *= 0.5f * (float)WINDOW_HEIGHT;
-    v2.x *= 0.5f * (float)WINDOW_WIDTH;
-    v2.y *= 0.5f * (float)WINDOW_HEIGHT;
-    v3.x *= 0.5f * (float)WINDOW_WIDTH;
-    v3.y *= 0.5f * (float)WINDOW_HEIGHT; 
+    v1.x *= 0.5F * (float)WINDOW_WIDTH;
+    v1.y *= 0.5F * (float)WINDOW_HEIGHT;
+    v2.x *= 0.5F * (float)WINDOW_WIDTH;
+    v2.y *= 0.5F * (float)WINDOW_HEIGHT;
+    v3.x *= 0.5F * (float)WINDOW_WIDTH;
+    v3.y *= 0.5F * (float)WINDOW_HEIGHT; 
 
     SDL_Point p1, p2, p3;
     

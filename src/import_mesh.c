@@ -6,7 +6,7 @@
 #include "import_mesh.h"
 #include "constants.h"
 #include "globals.h"
-#include "tad.h"
+#include "abstract_data_types.h"
 
 Mesh* ImportMesh() {
     Mesh* STLmesh;
@@ -100,6 +100,5 @@ Mesh* ImportMesh() {
 
     fclose(file);
 
-    
     return STLmesh;
 } 

@@ -3,7 +3,7 @@
 
 #include "./globals.h"
 #include "./constants.h"
-#include "./tad.h"
+#include "./abstract_data_types.h"
 #include "./process_input.h"
 
 void process_input() {
@@ -20,35 +20,35 @@ void process_input() {
                 game_is_running = FALSE;
 
             if(event.key.keysym.sym == SDLK_UP)
-                moveY = -1;
+                inputMoveY = -1;
             if(event.key.keysym.sym == SDLK_DOWN)
-                moveY = 1;
+                inputMoveY = 1;
             if(event.key.keysym.sym == SDLK_LEFT)
-                moveX = -1;
+                inputMoveX = -1;
             if(event.key.keysym.sym == SDLK_RIGHT)
-                moveX = 1;
+                inputMoveX = 1;
 
             if(event.key.keysym.sym == SDLK_e)
-                moveZ = 1;
+                inputMoveZ = 1;
             if(event.key.keysym.sym == SDLK_q)
-                moveZ = -1;
+                inputMoveZ = -1;
 
             if(event.key.keysym.sym == SDLK_a)
-                rotateY = -1;
+                inputRotateY = -1;
             if(event.key.keysym.sym == SDLK_d)
-                rotateY = 1;
+                inputRotateY = 1;
             if(event.key.keysym.sym == SDLK_w)
-                rotateX = 1;
+                inputRotateX = 1;
             if(event.key.keysym.sym == SDLK_s)
-                rotateX = -1;
+                inputRotateX = -1;
             
             break;
         case SDL_KEYUP:
-            moveX = 0;
-            moveY = 0;
-            moveZ = 0;
-            rotateX = 0;
-            rotateY = 0;
-            rotateZ = 0;
+            inputMoveX = 0;
+            inputMoveY = 0;
+            inputMoveZ = 0;
+            inputRotateX = 0;
+            inputRotateY = 0;
+            inputRotateZ = 0;
     }
 }

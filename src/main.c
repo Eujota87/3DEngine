@@ -5,7 +5,7 @@
 
 #include "./constants.h"
 #include "./globals.h"
-#include "./tad.h"
+#include "./abstract_data_types.h"
 #include "./init_and_destroy.h"
 #include "./setup.h"
 #include "./process_input.h"
@@ -14,34 +14,31 @@
 
 SDL_Window* my_window = NULL;
 SDL_Renderer* my_renderer = NULL;
+
 int game_is_running = FALSE;
+
+
 Mesh* my_mesh = NULL;
+Mesh* my_meshTranslated = NULL;
+Mesh* my_meshScaled = NULL;
 Mesh* my_meshRotated = NULL;
 Mesh* my_meshProjected = NULL;
 
-float near;
-float far;
+Matrix4 projectionMatrix;
+
+float zNear;
+float zFar;
 float fov;
 float aspectRatio;
 float fovRad;
 
-Matrix4 projectionMatrix;
+float inputMoveX = 0;
+float inputMoveY = 0;
+float inputMoveZ = 0;
+float inputRotateX = 0;
+float inputRotateY = 0;
+float inputRotateZ = 0;
 
-Matrix4 rotationMatrix_X;
-Matrix4 rotationMatrix_Y;
-Matrix4 rotationMatrix_Z;
-
-//------------------------------------------------------------------------------
-//TESTING
-
-float moveX = 0;
-float moveY = 0;
-float moveZ = 0;
-float rotateX = 0;
-float rotateY = 0;
-float rotateZ = 0;
-
-//------------------------------------------------------------------------------
 
 
 int main() {

@@ -1,5 +1,5 @@
-#ifndef TAD
-#define TAD
+#ifndef abstract_data_types
+#define abstract_data_types
 
 typedef struct vector2 Vector2;
 typedef struct vector3 Vector3;
@@ -9,8 +9,15 @@ typedef struct mesh Mesh;
 
 Vector3 MulMatrix4Vector3(Vector3 vecIn, Matrix4 mat4);
 
-
 Mesh* CreateMesh(int triangleCount);
+
+Triangle ProjectTriangle(Triangle triangleIn, Matrix4 matrix);
+void ProjectMesh(Mesh* meshIn, Mesh* meshOut, Matrix4 matrix);
+
+void InputMoveMesh(Mesh* mesh, float delta_time);
+void RotateMesh(Mesh* meshIn, Mesh* meshOut, float degrees, char axis);
+
+void PrintMeshData(Mesh* mesh);
 
 struct vector2 {
     float x;
@@ -38,6 +45,5 @@ struct mesh {
     Vector3 pivot;
 };
 
-void PrintMeshData(Mesh* mesh);
 
 #endif

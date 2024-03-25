@@ -1,33 +1,26 @@
-#include "./tad.h"
+#include "./abstract_data_types.h"
 
 extern SDL_Window* my_window;
 extern SDL_Renderer* my_renderer;
 
 extern int game_is_running;
 
-extern float near;
-extern float far;
+extern Mesh* my_meshScaled;
+extern Mesh* my_meshRotated;
+extern Mesh* my_meshTranslated;
+ 
+extern Matrix4 projectionMatrix;
+
+extern float zNear;
+extern float zFar;
 extern float fov;
 extern float aspectRatio;
 extern float fovRad;
 
-extern Mesh* my_meshRotated;
- 
-
-extern Matrix4 projectionMatrix;
-extern Matrix4 rotationMatrix_X;
-extern Matrix4 rotationMatrix_Y;
-extern Matrix4 rotationMatrix_Z;
-
-//------------------------------------------------------------------------------
-//TESTING
-
-extern float moveX;
-extern float moveY;
-extern float moveZ;
-extern float rotateX;
-extern float rotateY;
-extern float rotateZ;
-
-//------------------------------------------------------------------------------
+extern float inputMoveX;
+extern float inputMoveY;
+extern float inputMoveZ;
+extern float inputRotateX;
+extern float inputRotateY;
+extern float inputRotateZ;
 
