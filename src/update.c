@@ -27,11 +27,15 @@ void update(Mesh* my_mesh, Mesh* my_meshProjected) {
 
     theta += 0.7F *delta_time;
 
-    RotateMesh(my_mesh, my_meshRotated, theta, 'z');
+    //RotateMesh(my_mesh, my_meshRotatedX, theta, 'x');
 
-    InputMoveMesh(my_mesh, delta_time);
-    
-    ProjectMesh(my_meshRotated, my_meshProjected, projectionMatrix);
+    RotateMesh(my_mesh, my_meshRotatedX, theta, 'x');
+    RotateMesh(my_meshRotatedX, my_meshRotatedY, theta/2, 'y');
+    RotateMesh(my_meshRotatedY, my_meshRotatedZ, theta/4, 'z');
+    TranslateMesh(my_meshRotatedZ, my_meshTranslated, 3.0F);
+
+
+    ProjectMesh(my_meshTranslated, my_meshProjected, projectionMatrix);
 
 }
 

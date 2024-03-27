@@ -33,10 +33,11 @@ void setup(Mesh** my_mesh, Mesh** my_meshProjected) {
     *my_mesh = ImportMesh();
     
     my_meshScaled = CreateMesh((*my_mesh)->triangleCount);
-    my_meshRotated = CreateMesh((*my_mesh)->triangleCount);
+    my_meshRotatedX = CreateMesh((*my_mesh)->triangleCount);
+    my_meshRotatedY = CreateMesh((*my_mesh)->triangleCount);
+    my_meshRotatedZ = CreateMesh((*my_mesh)->triangleCount);
     my_meshTranslated = CreateMesh((*my_mesh)->triangleCount);
     *my_meshProjected = CreateMesh((*my_mesh)->triangleCount);
 
-    my_meshRotated->triangleCount = (*my_mesh)->triangleCount;
 }
 

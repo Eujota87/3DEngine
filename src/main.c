@@ -21,7 +21,9 @@ int game_is_running = FALSE;
 Mesh* my_mesh = NULL;
 Mesh* my_meshTranslated = NULL;
 Mesh* my_meshScaled = NULL;
-Mesh* my_meshRotated = NULL;
+Mesh* my_meshRotatedX = NULL;
+Mesh* my_meshRotatedY = NULL;
+Mesh* my_meshRotatedZ = NULL;
 Mesh* my_meshProjected = NULL;
 
 Matrix4 projectionMatrix;

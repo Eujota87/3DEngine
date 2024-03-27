@@ -6,7 +6,9 @@ extern SDL_Renderer* my_renderer;
 extern int game_is_running;
 
 extern Mesh* my_meshScaled;
-extern Mesh* my_meshRotated;
+extern Mesh* my_meshRotatedX;
+extern Mesh* my_meshRotatedY;
+extern Mesh* my_meshRotatedZ;
 extern Mesh* my_meshTranslated;
  
 extern Matrix4 projectionMatrix;

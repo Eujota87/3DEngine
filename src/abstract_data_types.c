@@ -46,6 +46,7 @@ void ProjectMesh(Mesh* meshIn, Mesh* meshOut, Matrix4 matrix) {
     }
 }
 
+//rethink how this might work with translation and rotation (maybe with moving a pivot and all the vertex follow the pivot)
 void InputMoveMesh(Mesh* meshIn, float delta_time) {
     for(int i = 0; i < meshIn->triangleCount; i++) {
         meshIn->triangle[i].vertex[0].x += 1.5 * inputMoveX * delta_time;
@@ -57,6 +58,17 @@ void InputMoveMesh(Mesh* meshIn, float delta_time) {
         meshIn->triangle[i].vertex[2].x += 1.5 * inputMoveX * delta_time;
         meshIn->triangle[i].vertex[2].y += 1.5 * inputMoveY * delta_time;
         meshIn->triangle[i].vertex[2].z += 1.5 * inputMoveZ * delta_time;
+    }
+}
+
+void TranslateMesh(Mesh* meshIn, Mesh* meshOut, float distance ) {
+    //temp implementation, z axis only
+    for(int i = 0; i < meshIn->triangleCount; i++) {
+        for(int j = 0; j < 3; j++) {
+            meshOut->triangle[i].vertex[j].x = meshIn->triangle[i].vertex[j].x;
+            meshOut->triangle[i].vertex[j].y = meshIn->triangle[i].vertex[j].y;
+            meshOut->triangle[i].vertex[j].z = meshIn->triangle[i].vertex[j].z + distance;
+        }
     }
 }
 

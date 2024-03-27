@@ -15,7 +15,7 @@ int initialize_window(SDL_Window** window, SDL_Renderer** renderer) {
     }
 
     *window = SDL_CreateWindow(
-        "My Window",
+        "3D Engine",
         SDL_WINDOWPOS_CENTERED, //x position
         SDL_WINDOWPOS_CENTERED, //y position
         WINDOW_WIDTH,

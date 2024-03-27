@@ -1,5 +1,5 @@
-- Fix/implement rotation and translation matrices and functions:
+- Fix/implement rotation and translation matrices and functions: HALF DONE
 	think on how to model the data transfer between different meshes. Will they all be pointers to meshes or global variables?
 	This will influence how we model the mesh transform functions.
 	
-- Organize code structure in general - clean the code
+- Organize code structure in general - clean the code ✅️
