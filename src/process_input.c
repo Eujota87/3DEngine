@@ -4,6 +4,7 @@
 #include "./globals.h"
 #include "./constants.h"
 #include "./abstract_data_types.h"
+#include "./geometry_operations.h"
 #include "./process_input.h"
 
 void process_input() {
@@ -41,6 +42,8 @@ void process_input() {
                 inputRotateX = 1;
             if(event.key.keysym.sym == SDLK_s)
                 inputRotateX = -1;
+            if(event.key.keysym.sym == SDLK_f)
+                errorKey = 1;
             
             break;
         case SDL_KEYUP:
@@ -50,5 +53,6 @@ void process_input() {
             inputRotateX = 0;
             inputRotateY = 0;
             inputRotateZ = 0;
+            errorKey = 0;
     }
 }

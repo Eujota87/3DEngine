@@ -8,6 +8,7 @@
 #include "import_mesh.h"
 #include "./globals.h"
 #include "./abstract_data_types.h"
+#include "./geometry_operations.h"
 #include "./setup.h"
 
 
@@ -16,7 +17,7 @@ void setup(Mesh** my_mesh, Mesh** my_meshProjected) {
 
     zNear = 0.1f;
     zFar = 1000.0f;
-    fov = 90.0f;
+    fov = 65.0f;
     aspectRatio = (float)WINDOW_HEIGHT / (float)WINDOW_WIDTH;
     fovRad = 1.0f / tanf(fov * 0.5f / 180.0f * 3.14159f);
 
@@ -30,13 +31,18 @@ void setup(Mesh** my_mesh, Mesh** my_meshProjected) {
     
     //-----------------------------------------------------------------
     
+    VectorZero.x = 0.0F;
+    VectorZero.y = 0.0F;
+    VectorZero.z = 0.0F;
+
     *my_mesh = ImportMesh();
-    
+    (*my_mesh)->pivot = VectorZero; //create function to calculate mesh center
     my_meshScaled = CreateMesh((*my_mesh)->triangleCount);
+    my_meshWorldCentered = CreateMesh((*my_mesh)->triangleCount);
     my_meshRotatedX = CreateMesh((*my_mesh)->triangleCount);
     my_meshRotatedY = CreateMesh((*my_mesh)->triangleCount);
     my_meshRotatedZ = CreateMesh((*my_mesh)->triangleCount);
-    my_meshTranslated = CreateMesh((*my_mesh)->triangleCount);
+    my_meshTranslatedFromPivot = CreateMesh((*my_mesh)->triangleCount);
     *my_meshProjected = CreateMesh((*my_mesh)->triangleCount);
 
 }

@@ -6,6 +6,7 @@
 #include "./constants.h"
 #include "./globals.h"
 #include "./abstract_data_types.h"
+#include "./geometry_operations.h"
 #include "./init_and_destroy.h"
 #include "./setup.h"
 #include "./process_input.h"
@@ -17,13 +18,15 @@ SDL_Renderer* my_renderer = NULL;
 
 int game_is_running = FALSE;
 
+Vector3 VectorZero;
 
 Mesh* my_mesh = NULL;
-Mesh* my_meshTranslated = NULL;
+Mesh* my_meshWorldCentered = NULL;
 Mesh* my_meshScaled = NULL;
 Mesh* my_meshRotatedX = NULL;
 Mesh* my_meshRotatedY = NULL;
 Mesh* my_meshRotatedZ = NULL;
+Mesh* my_meshTranslatedFromPivot = NULL;
 Mesh* my_meshProjected = NULL;
 
 Matrix4 projectionMatrix;
@@ -40,7 +43,7 @@ float inputMoveZ = 0;
 float inputRotateX = 0;
 float inputRotateY = 0;
 float inputRotateZ = 0;
-
+int errorKey = 0;
 
 
 int main() {

@@ -7,18 +7,7 @@ typedef struct triangle Triangle;
 typedef struct matrix4 Matrix4;
 typedef struct mesh Mesh;
 
-Vector3 MulMatrix4Vector3(Vector3 vecIn, Matrix4 mat4);
-
 Mesh* CreateMesh(int triangleCount);
-
-Triangle ProjectTriangle(Triangle triangleIn, Matrix4 matrix);
-void ProjectMesh(Mesh* meshIn, Mesh* meshOut, Matrix4 matrix);
-
-void InputMoveMesh(Mesh* mesh, float delta_time);
-void TranslateMesh(Mesh* meshIn, Mesh* meshOut, float distance );
-void RotateMesh(Mesh* meshIn, Mesh* meshOut, float degrees, char axis);
-
-void PrintMeshData(Mesh* mesh);
 
 struct vector2 {
     float x;
@@ -45,6 +34,5 @@ struct mesh {
     Triangle* triangle;
     Vector3 pivot;
 };
-
 
 #endif

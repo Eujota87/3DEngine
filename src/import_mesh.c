@@ -3,13 +3,14 @@
 #include <stdlib.h>
 #include <string.h>
 
-#include "import_mesh.h"
-#include "constants.h"
-#include "globals.h"
-#include "abstract_data_types.h"
+#include "./import_mesh.h"
+#include "./constants.h"
+#include "./globals.h"
+#include "./abstract_data_types.h"
+#include "./geometry_operations.h"
 
 Mesh* ImportMesh() {
-    Mesh* STLmesh;
+    Mesh* stl_mesh;
     FILE *file;
 
     int triangleCount = 0;
@@ -33,7 +34,7 @@ Mesh* ImportMesh() {
     fclose(file);
     file = fopen("./assets/STLoutput.txt", "r");
 
-    STLmesh = CreateMesh(triangleCount);
+    stl_mesh = CreateMesh(triangleCount);
 
     int lineCount = 0;
     int vectorPosition = 0;
@@ -43,53 +44,53 @@ Mesh* ImportMesh() {
     while(fgets(bufferUpdateTriangles, 255, file)) {
         switch (lineCount) {
             case 0:
-                STLmesh->triangle[triangleIndex].normal.x = atof(bufferUpdateTriangles);
+                stl_mesh->triangle[triangleIndex].normal.x = atof(bufferUpdateTriangles);
                 lineCount++;
                 break;
             case 1:
-                STLmesh->triangle[triangleIndex].normal.y = atof(bufferUpdateTriangles);
+                stl_mesh->triangle[triangleIndex].normal.y = atof(bufferUpdateTriangles);
                 lineCount++;
                 break;
             case 2:
-                STLmesh->triangle[triangleIndex].normal.z = atof(bufferUpdateTriangles);
+                stl_mesh->triangle[triangleIndex].normal.z = atof(bufferUpdateTriangles);
                 lineCount++;
                 break;
             case 3:
-                STLmesh->triangle[triangleIndex].vertex[vertexIndex].x = atof(bufferUpdateTriangles);
+                stl_mesh->triangle[triangleIndex].vertex[vertexIndex].x = atof(bufferUpdateTriangles);
                 lineCount++;
                 break;           
             case 4:
-                STLmesh->triangle[triangleIndex].vertex[vertexIndex].y = atof(bufferUpdateTriangles);
+                stl_mesh->triangle[triangleIndex].vertex[vertexIndex].y = atof(bufferUpdateTriangles);
                 lineCount++;
                 break; 
             case 5:
-                STLmesh->triangle[triangleIndex].vertex[vertexIndex].z = atof(bufferUpdateTriangles);
+                stl_mesh->triangle[triangleIndex].vertex[vertexIndex].z = atof(bufferUpdateTriangles);
                 vertexIndex++;
                 lineCount++;
                 break;
             case 6:
-                STLmesh->triangle[triangleIndex].vertex[vertexIndex].x = atof(bufferUpdateTriangles);
+                stl_mesh->triangle[triangleIndex].vertex[vertexIndex].x = atof(bufferUpdateTriangles);
                 lineCount++;
                 break;           
             case 7:
-                STLmesh->triangle[triangleIndex].vertex[vertexIndex].y = atof(bufferUpdateTriangles);
+                stl_mesh->triangle[triangleIndex].vertex[vertexIndex].y = atof(bufferUpdateTriangles);
                 lineCount++;
                 break; 
             case 8:
-                STLmesh->triangle[triangleIndex].vertex[vertexIndex].z = atof(bufferUpdateTriangles);
+                stl_mesh->triangle[triangleIndex].vertex[vertexIndex].z = atof(bufferUpdateTriangles);
                 vertexIndex++;
                 lineCount++;
                 break;
             case 9:
-                STLmesh->triangle[triangleIndex].vertex[vertexIndex].x = atof(bufferUpdateTriangles);
+                stl_mesh->triangle[triangleIndex].vertex[vertexIndex].x = atof(bufferUpdateTriangles);
                 lineCount++;
                 break;           
             case 10:
-                STLmesh->triangle[triangleIndex].vertex[vertexIndex].y = atof(bufferUpdateTriangles);
+                stl_mesh->triangle[triangleIndex].vertex[vertexIndex].y = atof(bufferUpdateTriangles);
                 lineCount++;
                 break; 
             case 11:
-                STLmesh->triangle[triangleIndex].vertex[vertexIndex].z = atof(bufferUpdateTriangles);
+                stl_mesh->triangle[triangleIndex].vertex[vertexIndex].z = atof(bufferUpdateTriangles);
                 vertexIndex = 0;
                 triangleIndex++;
                 lineCount = 0;
@@ -100,5 +101,5 @@ Mesh* ImportMesh() {
 
     fclose(file);
 
-    return STLmesh;
+    return stl_mesh;
 } 
