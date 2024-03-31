@@ -31,12 +31,12 @@ void setup(Mesh** my_mesh, Mesh** my_meshProjected) {
     
     //-----------------------------------------------------------------
     
-    VectorZero.x = 0.0F;
-    VectorZero.y = 0.0F;
-    VectorZero.z = 0.0F;
+    vector3Null.x = 0.0F;
+    vector3Null.y = 0.0F;
+    vector3Null.z = 0.0F;
 
     *my_mesh = ImportMesh();
-    (*my_mesh)->pivot = VectorZero; //create function to calculate mesh center
+    (*my_mesh)->pivot = vector3Null; //create function to calculate mesh center
     my_meshScaled = CreateMesh((*my_mesh)->triangleCount);
     my_meshWorldCentered = CreateMesh((*my_mesh)->triangleCount);
     my_meshRotatedX = CreateMesh((*my_mesh)->triangleCount);
@@ -44,6 +44,9 @@ void setup(Mesh** my_mesh, Mesh** my_meshProjected) {
     my_meshRotatedZ = CreateMesh((*my_mesh)->triangleCount);
     my_meshTranslatedFromPivot = CreateMesh((*my_mesh)->triangleCount);
     *my_meshProjected = CreateMesh((*my_mesh)->triangleCount);
+
+    testObj = CreateObj3D(*my_mesh);
+    fprintf(stderr, "%f\n", testObj->pivot.x);
 
 }
 

@@ -27,18 +27,19 @@ Vector3 MulMatrix4Vector3(Vector3 vecIn, Matrix4 mat4) {
     return vecOut;
 }
 
-void TranslateTrianglesFromPivot(Mesh* meshIn, Mesh* meshOut) {
+void TranslateObjFromPivot(Obj3D* obj) {
     
     //temp
-    meshOut->pivot = meshIn->pivot;
+    //meshOut->pivot = meshIn->pivot;
     
-    for(int i = 0; i < meshIn->triangleCount; i++) {
+    for(int i = 0; i < obj->triangleCount; i++) {
         for(int j = 0; j < 3; j++) {
-            meshOut->triangle[i].vertex[j].x = meshIn->triangle[i].vertex[j].x + meshIn->pivot.x;
-            meshOut->triangle[i].vertex[j].y = meshIn->triangle[i].vertex[j].y + meshIn->pivot.y;
-            meshOut->triangle[i].vertex[j].z = meshIn->triangle[i].vertex[j].z + meshIn->pivot.z;
+            obj->meshBufferIn->triangle[i].vertex[j].y = obj->meshBufferOut->triangle[i].vertex[j].y + obj->pivot.y;
+            obj->meshBufferIn->triangle[i].vertex[j].z = obj->meshBufferOut->triangle[i].vertex[j].z + obj->pivot.z;
+            obj->meshBufferIn->triangle[i].vertex[j].x = obj->meshBufferOut->triangle[i].vertex[j].x + obj->pivot.x;
         }
     }
+    obj->meshBufferOut = obj->meshBufferIn;
 }
 
 void MeshToWorldCenter(Mesh* meshIn, Mesh* meshOut) {
@@ -62,9 +63,9 @@ Triangle ProjectTriangle(Triangle triangleIn, Matrix4 matrix) {
     return triangleOut;
 }
 
-void ProjectMesh(Mesh* meshIn, Mesh* meshOut, Matrix4 matrix) {
-    for(int i = 0; i < meshIn->triangleCount; i++) {
-        meshOut->triangle[i] = ProjectTriangle(meshIn->triangle[i], matrix);
+void ProjectObjMesh(Obj3D* obj, Matrix4 matrix) {
+    for(int i = 0; i < obj->triangleCount; i++) {
+        obj->meshProjected->triangle[i] = ProjectTriangle(obj->meshBufferOut->triangle[i], matrix);
     }
 }
 
@@ -83,11 +84,11 @@ void InputMoveMesh(Mesh* meshIn, float delta_time) {
     }
 }
 
-void InputMoveMeshPivot(Mesh* meshIn, float delta_time) {
+void InputMoveObjPivot(Obj3D* obj, float delta_time) {
     
-    meshIn->pivot.x += 3.0 * inputMoveX * delta_time;
-    meshIn->pivot.y += 3.0 * inputMoveY * delta_time;
-    meshIn->pivot.z += 3.0 * inputMoveZ * delta_time;
+    obj->pivot.x += 3.0 * inputMoveX * delta_time;
+    obj->pivot.y += 3.0 * inputMoveY * delta_time;
+    obj->pivot.z += 3.0 * inputMoveZ * delta_time;
     
 }
 
@@ -102,12 +103,12 @@ void TranslateMesh(Mesh* meshIn, Mesh* meshOut, float distance ) {
     }
 }
 
-void RotateMesh(Mesh* meshIn, Mesh* meshOut, float degrees, char axis) {
+void RotateObj(Obj3D* obj, float degrees, char axis) {
     
     Matrix4 rotationMatrix;
     
     //temp
-    meshOut->pivot = meshIn->pivot;
+    //meshOut->pivot = meshIn->pivot;
 
     switch(axis) {
         case 'x':
@@ -169,11 +170,12 @@ void RotateMesh(Mesh* meshIn, Mesh* meshOut, float degrees, char axis) {
             break;
     }
     
-    for(int i = 0; i < meshIn->triangleCount; i++) {
+    for(int i = 0; i < obj->triangleCount; i++) {
         for(int j = 0; j < 3; j++) {
-            meshOut->triangle[i].vertex[j] = MulMatrix4Vector3(meshIn->triangle[i].vertex[j], rotationMatrix);
+            obj->meshBufferIn->triangle[i].vertex[j] = MulMatrix4Vector3(obj->meshBufferOut->triangle[i].vertex[j], rotationMatrix);
         }
     }
+    obj->meshBufferOut = obj->meshBufferIn;
 }
 
 void PrintMeshData(Mesh* mesh) {

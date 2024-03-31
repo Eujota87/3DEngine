@@ -99,6 +99,8 @@ Mesh* ImportMesh() {
 
     }
 
+    stl_mesh->pivot = vector3Null;
+
     fclose(file);
 
     return stl_mesh;

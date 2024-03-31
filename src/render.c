@@ -8,17 +8,17 @@
 #include "./render.h"
 
 void RenderTriangle(Triangle triangle);
-void RenderMesh(Mesh* mesh);
+void RenderObj(Obj3D* obj);
 
 void render(Mesh* my_meshProjected) {
     
     //render black screen
-    SDL_SetRenderDrawColor(my_renderer, 50, 50, 50, 255);
+    SDL_SetRenderDrawColor(my_renderer, 20, 20, 20, 255);
     SDL_RenderClear(my_renderer);
 
-    SDL_SetRenderDrawColor(my_renderer, 0, 255, 50, 155);
+    SDL_SetRenderDrawColor(my_renderer, 0, 255, 255, 155);
     
-    RenderMesh(my_meshProjected);
+    RenderObj(testObj);
    
     SDL_RenderPresent(my_renderer); //swap buffer
 
@@ -68,10 +68,9 @@ void RenderTriangle(Triangle triangle) {
     );
 }
 
-void RenderMesh(Mesh* mesh) {
-    int triangleCount = mesh->triangleCount; 
-    for(int i = 0; i < triangleCount; i++) {
-        RenderTriangle(mesh->triangle[i]);
+void RenderObj(Obj3D* obj) {
+    for(int i = 0; i < obj->triangleCount; i++) {
+        RenderTriangle(obj->meshProjected->triangle[i]);
     }
 }
 

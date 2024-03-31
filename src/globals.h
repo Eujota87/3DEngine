@@ -6,8 +6,9 @@ extern SDL_Renderer* my_renderer;
 
 extern int game_is_running;
 
-extern Vector3 VectorZero;
+extern Vector3 vector3Null;
 
+extern Obj3D* testObj;
 
 extern Mesh* my_meshScaled;
 

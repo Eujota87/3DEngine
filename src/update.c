@@ -30,7 +30,8 @@ void update(Mesh* my_mesh, Mesh* my_meshProjected) {
 
     //RotateMesh(my_mesh, my_meshRotatedX, theta, 'x');
 
-    InputMoveMeshPivot(my_mesh, delta_time);
+    testObj->meshBufferOut = testObj->meshImported;
+    InputMoveObjPivot(testObj, delta_time);
     if(errorKey != 0) { 
         fprintf(
             stderr,
@@ -44,13 +45,13 @@ void update(Mesh* my_mesh, Mesh* my_meshProjected) {
     //create object struct latter
     //MeshToWorldCenter(my_mesh, my_meshWorldCentered); no need to bring to world center if it is already centered
 
-    RotateMesh(my_mesh, my_meshRotatedX, theta, 'x');
-    RotateMesh(my_meshRotatedX, my_meshRotatedY, theta/2.0F, 'y');
-    RotateMesh(my_meshRotatedY, my_meshRotatedZ, theta/4.0F, 'z');
-    TranslateTrianglesFromPivot(my_meshRotatedZ, my_meshTranslatedFromPivot);
+    RotateObj(testObj, theta, 'x');
+    RotateObj(testObj, theta/2.0F, 'y');
+    RotateObj(testObj, theta/4.0F, 'z');
+    TranslateObjFromPivot(testObj);
     //TranslateMesh(my_meshRotatedZ, my_meshTranslatedFromPivot, 3.0F);
 
-    ProjectMesh(my_meshTranslatedFromPivot, my_meshProjected, projectionMatrix);
+    ProjectObjMesh(testObj, projectionMatrix);
 
 }
 

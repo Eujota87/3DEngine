@@ -18,7 +18,7 @@ SDL_Renderer* my_renderer = NULL;
 
 int game_is_running = FALSE;
 
-Vector3 VectorZero;
+Vector3 vector3Null;
 
 Mesh* my_mesh = NULL;
 Mesh* my_meshWorldCentered = NULL;
@@ -30,6 +30,8 @@ Mesh* my_meshTranslatedFromPivot = NULL;
 Mesh* my_meshProjected = NULL;
 
 Matrix4 projectionMatrix;
+
+Obj3D* testObj = NULL; 
 
 float zNear;
 float zFar;
