@@ -10,6 +10,8 @@ extern Obj3D* my_obj;
 
 extern Matrix4 projectionMatrix;
 extern Vector4 vector4Null;
+extern Vector4 vector4DirectionZ;
+
 
 extern float zNear;
 extern float zFar;

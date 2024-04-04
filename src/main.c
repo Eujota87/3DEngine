@@ -23,6 +23,7 @@ Obj3D* my_obj = NULL;
 
 Matrix4 projectionMatrix;
 Vector4 vector4Null;
+Vector4 vector4DirectionZ;
 
 float zNear;
 float zFar;
@@ -36,7 +37,7 @@ float inputMoveZ = 0;
 float inputRotateX = 0;
 float inputRotateY = 0;
 float inputRotateZ = 0;
-int errorKey = 0;
+int errorKey = 1;
 
 int main() {
     

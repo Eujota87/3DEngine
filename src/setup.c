@@ -32,12 +32,19 @@ void setup(Mesh** my_mesh) {
     vector4Null.z = 0.0F;
     vector4Null.w = 0.0F;
     
+    vector4DirectionZ.x = 0.0F;
+    vector4DirectionZ.y = 0.0F;
+    vector4DirectionZ.z = 10.0F;
+    vector4DirectionZ.w = 0.0F;
+    
     //-----------------------------------------------------------------
 
     *my_mesh = ImportMesh();
     (*my_mesh)->pivot = vector4Null; //create function to calculate mesh center
 
     my_obj = CreateObj3D(*my_mesh);
+
+    my_obj->pivot.z += 6.0F;
 
 }
 

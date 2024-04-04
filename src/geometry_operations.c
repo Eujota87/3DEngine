@@ -27,6 +27,18 @@ Vector4 MulMatrix4Vector3(Vector4 vecIn, Matrix4 mat4) {
     return vecOut;
 }
 
+float DotProductVec2(Vector4 vec1, Vector4 vec2) {
+    float scalar;
+    scalar = (vec1.x * vec2.x) + (vec1.y * vec2.y);
+    return scalar;
+}
+
+float DotProductVec3(Vector4 vec1, Vector4 vec2) {
+    float scalar;
+    scalar = (vec1.x * vec2.x) + (vec1.y * vec2.y) + (vec1.z * vec2.z);
+    return scalar;
+}
+
 void TranslateObjToPivot(Obj3D* obj) {
     
     for(int i = 0; i < obj->triangleCount; i++) {
@@ -35,8 +47,24 @@ void TranslateObjToPivot(Obj3D* obj) {
             obj->meshBufferIn->triangle[i].vertex[j].z = obj->meshBufferOut->triangle[i].vertex[j].z + obj->pivot.z;
             obj->meshBufferIn->triangle[i].vertex[j].x = obj->meshBufferOut->triangle[i].vertex[j].x + obj->pivot.x;
         }
+        
+        obj->meshBufferIn->triangle[i].center.x = obj->meshBufferOut->triangle[i].center.x + obj->pivot.x;
+        obj->meshBufferIn->triangle[i].center.y = obj->meshBufferOut->triangle[i].center.y + obj->pivot.y;
+        obj->meshBufferIn->triangle[i].center.z = obj->meshBufferOut->triangle[i].center.z + obj->pivot.z;
+
+        obj->meshBufferIn->triangle[i].normal.x = (
+            obj->meshBufferOut->triangle[i].normal.x + obj->meshBufferIn->triangle[i].center.x
+        );
+        obj->meshBufferIn->triangle[i].normal.y = (
+            obj->meshBufferOut->triangle[i].normal.y + obj->meshBufferIn->triangle[i].center.y
+        );
+        obj->meshBufferIn->triangle[i].normal.z = (
+            obj->meshBufferOut->triangle[i].normal.z + obj->meshBufferIn->triangle[i].center.z
+        );
     }
+
     obj->meshBufferOut = obj->meshBufferIn;
+
 }
 
 void TranslateObjToWorldCenter(Obj3D* obj) {
@@ -48,8 +76,27 @@ void TranslateObjToWorldCenter(Obj3D* obj) {
             obj->meshBufferIn->triangle[i].vertex[j].x = obj->meshBufferOut->triangle[i].vertex[j].x - obj->pivot.x;
         }
     }
+    //see if I'll need to translate triangle centers and normals to world center as well
     obj->meshBufferOut = obj->meshBufferIn;
+
 }
+
+Vector4 NormalToWorldCenter(Obj3D* obj, int triangle_index) {
+    
+    Vector4 centered_normal;
+    
+    centered_normal.x = (
+        obj->meshBufferOut->triangle[triangle_index].normal.x - obj->meshBufferOut->triangle[triangle_index].center.x
+    );
+    centered_normal.y = (
+        obj->meshBufferOut->triangle[triangle_index].normal.y - obj->meshBufferOut->triangle[triangle_index].center.y
+    );
+    centered_normal.z = (
+        obj->meshBufferOut->triangle[triangle_index].normal.z - obj->meshBufferOut->triangle[triangle_index].center.z
+    );
+    return centered_normal;
+
+};
 
 void InputMoveObjPivot(Obj3D* obj, float delta_time) {
     
@@ -130,6 +177,7 @@ void RotateObj(Obj3D* obj, float degrees, char axis) {
         for(int j = 0; j < 3; j++) {
             obj->meshBufferIn->triangle[i].vertex[j] = MulMatrix4Vector3(obj->meshBufferOut->triangle[i].vertex[j], rotationMatrix);
         }
+        obj->meshBufferIn->triangle[i].normal = MulMatrix4Vector3(obj->meshBufferOut->triangle[i].normal, rotationMatrix);
     }
     obj->meshBufferOut = obj->meshBufferIn;
 }
@@ -140,6 +188,7 @@ Triangle ProjectTriangle(Triangle triangleIn, Matrix4 matrix) {
         triangleOut.vertex[i] = MulMatrix4Vector3(triangleIn.vertex[i], matrix);
     }
     triangleOut.center = MulMatrix4Vector3(triangleIn.center, matrix);
+    triangleOut.normal = MulMatrix4Vector3(triangleIn.normal, matrix);
     
     return triangleOut;
 }

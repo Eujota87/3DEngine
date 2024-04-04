@@ -36,9 +36,10 @@ void update() {
     RotateObj(my_obj, theta, 'x');
     RotateObj(my_obj, theta/2.0F, 'y');
     RotateObj(my_obj, theta/4.0F, 'z');
-    TranslateObjToPivot(my_obj);
-
+    
     UpdateTriangleCenter(my_obj);
+
+    TranslateObjToPivot(my_obj);
 
     ProjectObjMesh(my_obj, projectionMatrix);
 
