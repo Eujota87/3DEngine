@@ -99,7 +99,7 @@ Mesh* ImportMesh() {
 
     }
 
-    stl_mesh->pivot = vector3Null;
+    stl_mesh->pivot = vector4Null;
 
     fclose(file);
 

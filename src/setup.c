@@ -12,8 +12,7 @@
 #include "./setup.h"
 
 
-
-void setup(Mesh** my_mesh, Mesh** my_meshProjected) {
+void setup(Mesh** my_mesh) {
 
     zNear = 0.1f;
     zFar = 1000.0f;
@@ -28,25 +27,17 @@ void setup(Mesh** my_mesh, Mesh** my_meshProjected) {
     projectionMatrix.m[3][2] = 1.0f;
     projectionMatrix.m[3][3] = 0;
 
+    vector4Null.x = 0.0F;
+    vector4Null.y = 0.0F;
+    vector4Null.z = 0.0F;
+    vector4Null.w = 0.0F;
     
     //-----------------------------------------------------------------
-    
-    vector3Null.x = 0.0F;
-    vector3Null.y = 0.0F;
-    vector3Null.z = 0.0F;
 
     *my_mesh = ImportMesh();
-    (*my_mesh)->pivot = vector3Null; //create function to calculate mesh center
-    my_meshScaled = CreateMesh((*my_mesh)->triangleCount);
-    my_meshWorldCentered = CreateMesh((*my_mesh)->triangleCount);
-    my_meshRotatedX = CreateMesh((*my_mesh)->triangleCount);
-    my_meshRotatedY = CreateMesh((*my_mesh)->triangleCount);
-    my_meshRotatedZ = CreateMesh((*my_mesh)->triangleCount);
-    my_meshTranslatedFromPivot = CreateMesh((*my_mesh)->triangleCount);
-    *my_meshProjected = CreateMesh((*my_mesh)->triangleCount);
+    (*my_mesh)->pivot = vector4Null; //create function to calculate mesh center
 
-    testObj = CreateObj3D(*my_mesh);
-    fprintf(stderr, "%f\n", testObj->pivot.x);
+    my_obj = CreateObj3D(*my_mesh);
 
 }
 

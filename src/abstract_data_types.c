@@ -22,7 +22,7 @@ Obj3D* CreateObj3D(Mesh* mesh) {
     obj->meshBufferOut = CreateMesh(mesh->triangleCount);
     obj->meshProjected = CreateMesh(mesh->triangleCount);
     
-    obj->pivot = vector3Null; //change this for a function calculating center of mass
+    obj->pivot = vector4Null; //change this for a function calculating center of mass
     obj->triangleCount = mesh->triangleCount;
     
     obj->meshBufferOut = obj->meshImported;

@@ -1,0 +1,12 @@
+{
+    "files.associations": {
+        "abstract_data_types.h": "c",
+        "constants.h": "c",
+        "process_input.h": "c",
+        "globals.h": "c",
+        "setup.h": "c",
+        "geometry_operations.h": "c",
+        "import_mesh.h": "c",
+        "stdio.h": "c"
+    }
+}

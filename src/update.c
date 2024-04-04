@@ -11,7 +11,7 @@ int last_frame_time = 0;
 
 float theta = 0;
 
-void update(Mesh* my_mesh, Mesh* my_meshProjected) {
+void update() {
     
     //caping frame rate
     int time_to_wait = FRAME_TARGET_TIME - (SDL_GetTicks() - last_frame_time);
@@ -28,30 +28,19 @@ void update(Mesh* my_mesh, Mesh* my_meshProjected) {
 
     theta += 0.7F *delta_time;
 
-    //RotateMesh(my_mesh, my_meshRotatedX, theta, 'x');
-
-    testObj->meshBufferOut = testObj->meshImported;
-    InputMoveObjPivot(testObj, delta_time);
-    if(errorKey != 0) { 
-        fprintf(
-            stderr,
-            "pivot my_mesh: %f, %f, %f\n",
-            my_mesh->pivot.x,
-            my_mesh->pivot.y,
-            my_mesh->pivot.z
-            );
-    }
+    //clear mesh buffer everyframe
+    my_obj->meshBufferOut = my_obj->meshImported;
     
-    //create object struct latter
-    //MeshToWorldCenter(my_mesh, my_meshWorldCentered); no need to bring to world center if it is already centered
+    InputMoveObjPivot(my_obj, delta_time);
 
-    RotateObj(testObj, theta, 'x');
-    RotateObj(testObj, theta/2.0F, 'y');
-    RotateObj(testObj, theta/4.0F, 'z');
-    TranslateObjFromPivot(testObj);
-    //TranslateMesh(my_meshRotatedZ, my_meshTranslatedFromPivot, 3.0F);
+    RotateObj(my_obj, theta, 'x');
+    RotateObj(my_obj, theta/2.0F, 'y');
+    RotateObj(my_obj, theta/4.0F, 'z');
+    TranslateObjToPivot(my_obj);
 
-    ProjectObjMesh(testObj, projectionMatrix);
+    UpdateTriangleCenter(my_obj);
+
+    ProjectObjMesh(my_obj, projectionMatrix);
 
 }
 

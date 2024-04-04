@@ -7,25 +7,23 @@
 #include "./geometry_operations.h"
 #include "./render.h"
 
-void RenderTriangle(Triangle triangle);
-void RenderObj(Obj3D* obj);
+void RenderTriangleWireframe(Triangle triangle);
+void RenderObjWireframe(Obj3D* obj);
 
-void render(Mesh* my_meshProjected) {
+void render() {
     
     //render black screen
-    SDL_SetRenderDrawColor(my_renderer, 20, 20, 20, 255);
+    SDL_SetRenderDrawColor(my_renderer, 50, 50, 50, 255);
     SDL_RenderClear(my_renderer);
-
-    SDL_SetRenderDrawColor(my_renderer, 0, 255, 255, 155);
     
-    RenderObj(testObj);
-   
+    RenderObjWireframe(my_obj);
+
     SDL_RenderPresent(my_renderer); //swap buffer
 
 }
 
-void RenderTriangle(Triangle triangle) {
-    Vector2 v1, v2, v3;
+void RenderTriangleWireframe(Triangle triangle) {
+    Vector2 v1, v2, v3, center;
     
     v1.x = triangle.vertex[0].x;
     v1.y = triangle.vertex[0].y;
@@ -33,20 +31,28 @@ void RenderTriangle(Triangle triangle) {
     v2.y = triangle.vertex[1].y;
     v3.x = triangle.vertex[2].x;
     v3.y = triangle.vertex[2].y;
-    
+    center.x = triangle.center.x;
+    center.y = triangle.center.y;
+
+    //scale points    
     v1.x += 1.0F;
     v1.y += 1.0F;
     v2.x += 1.0F;
     v2.y += 1.0F;
     v3.x += 1.0F;
     v3.y += 1.0F;
-
+    center.x += 1.0F;
+    center.y += 1.0F;
+    
+    //move points to screen center
     v1.x *= 0.5F * (float)WINDOW_WIDTH;
     v1.y *= 0.5F * (float)WINDOW_HEIGHT;
     v2.x *= 0.5F * (float)WINDOW_WIDTH;
     v2.y *= 0.5F * (float)WINDOW_HEIGHT;
     v3.x *= 0.5F * (float)WINDOW_WIDTH;
-    v3.y *= 0.5F * (float)WINDOW_HEIGHT; 
+    v3.y *= 0.5F * (float)WINDOW_HEIGHT;
+    center.x *= 0.5F * (float)WINDOW_WIDTH;
+    center.y *= 0.5F * (float)WINDOW_HEIGHT; 
 
     SDL_Point p1, p2, p3;
     
@@ -57,10 +63,14 @@ void RenderTriangle(Triangle triangle) {
     p3.x = v3.x;
     p3.y = v3.y;
 
-
+    //draw triangle center points
+    SDL_SetRenderDrawColor(my_renderer, 255, 0, 0, 255);
+    SDL_RenderDrawPoint(my_renderer, center.x, center.y);
 
     SDL_Point points[4] = {p1, p2, p3, p1};
 
+    //draw triangle wireframe
+    SDL_SetRenderDrawColor(my_renderer, 0, 255, 0, 155);
     SDL_RenderDrawLines(
         my_renderer, 
         points,
@@ -68,9 +78,9 @@ void RenderTriangle(Triangle triangle) {
     );
 }
 
-void RenderObj(Obj3D* obj) {
+void RenderObjWireframe(Obj3D* obj) {
     for(int i = 0; i < obj->triangleCount; i++) {
-        RenderTriangle(obj->meshProjected->triangle[i]);
+        RenderTriangleWireframe(obj->meshProjected->triangle[i]);
     }
 }
 

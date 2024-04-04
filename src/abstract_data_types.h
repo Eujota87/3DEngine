@@ -3,6 +3,7 @@
 
 typedef struct vector2 Vector2;
 typedef struct vector3 Vector3;
+typedef struct vector4 Vector4;
 typedef struct triangle Triangle;
 typedef struct matrix4 Matrix4;
 typedef struct mesh Mesh;
@@ -30,8 +31,9 @@ struct vector4 {
 };
 
 struct triangle {
-    Vector3 vertex[3];
-    Vector3 normal;
+    Vector4 vertex[3];
+    Vector4 center;
+    Vector4 normal;
 };
 
 struct matrix4 {
@@ -41,11 +43,11 @@ struct matrix4 {
 struct mesh {
     int triangleCount;
     Triangle* triangle;
-    Vector3 pivot;
+    Vector4 pivot;
 };
 
 struct obj3D {
-    Vector3 pivot;
+    Vector4 pivot;
     int triangleCount;
     Mesh* meshImported;
     Mesh* meshBufferIn;

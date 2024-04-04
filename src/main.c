@@ -18,20 +18,11 @@ SDL_Renderer* my_renderer = NULL;
 
 int game_is_running = FALSE;
 
-Vector3 vector3Null;
-
 Mesh* my_mesh = NULL;
-Mesh* my_meshWorldCentered = NULL;
-Mesh* my_meshScaled = NULL;
-Mesh* my_meshRotatedX = NULL;
-Mesh* my_meshRotatedY = NULL;
-Mesh* my_meshRotatedZ = NULL;
-Mesh* my_meshTranslatedFromPivot = NULL;
-Mesh* my_meshProjected = NULL;
+Obj3D* my_obj = NULL; 
 
 Matrix4 projectionMatrix;
-
-Obj3D* testObj = NULL; 
+Vector4 vector4Null;
 
 float zNear;
 float zFar;
@@ -47,17 +38,16 @@ float inputRotateY = 0;
 float inputRotateZ = 0;
 int errorKey = 0;
 
-
 int main() {
     
     game_is_running  = initialize_window(&my_window, &my_renderer);
     
-    setup(&my_mesh, &my_meshProjected);
+    setup(&my_mesh);
 
     while(game_is_running) {
         process_input();
-        update(my_mesh, my_meshProjected);
-        render(my_meshProjected);
+        update();
+        render();
     }
     
     destroy_window(my_window, my_renderer);
