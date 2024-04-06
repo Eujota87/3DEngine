@@ -1,6 +1,8 @@
 
 #include <stdio.h>
 #include <SDL2/SDL.h>
+#include <stdlib.h>
+#include <math.h>
 
 #include "./abstract_data_types.h"
 #include "./geometry_operations.h"
@@ -76,10 +78,41 @@ void TranslateObjToWorldCenter(Obj3D* obj) {
             obj->meshBufferIn->triangle[i].vertex[j].x = obj->meshBufferOut->triangle[i].vertex[j].x - obj->pivot.x;
         }
     }
-    //see if I'll need to translate triangle centers and normals to world center as well
+    //see later if I'll need to translate triangle centers and normals to world center as well
     obj->meshBufferOut = obj->meshBufferIn;
 
 }
+
+Vector4 GetVector4(Vector4 vecStart, Vector4 vecEnd) {
+    Vector4 vecOut;
+
+    vecOut.x = vecEnd.x - vecStart.x;
+    vecOut.y = vecEnd.y - vecStart.y;
+    vecOut.z = vecEnd.z - vecStart.z;
+
+    return vecOut;
+}
+
+Vector4 GetVector4Normalized(Vector4 vecStart, Vector4 vecEnd) {
+    return NormalizeVector4(GetVector4(vecStart, vecEnd));
+}
+
+
+float GetVector4Length(Vector4 vecIn) {
+    float length = sqrtf((vecIn.x * vecIn.x) + (vecIn.y * vecIn.y) + (vecIn.z * vecIn.z));
+    return length;
+}
+
+Vector4 NormalizeVector4(Vector4 vecIn) {
+    Vector4 vecOut;
+
+    vecOut.x = vecIn.x / GetVector4Length(vecIn);
+    vecOut.y = vecIn.y / GetVector4Length(vecIn);
+    vecOut.z = vecIn.z / GetVector4Length(vecIn);
+
+    return vecOut;
+}
+
 
 Vector4 NormalToWorldCenter(Obj3D* obj, int triangle_index) {
     
@@ -94,6 +127,10 @@ Vector4 NormalToWorldCenter(Obj3D* obj, int triangle_index) {
     centered_normal.z = (
         obj->meshBufferOut->triangle[triangle_index].normal.z - obj->meshBufferOut->triangle[triangle_index].center.z
     );
+    
+    //normalize normal
+    centered_normal = NormalizeVector4(centered_normal);
+
     return centered_normal;
 
 };

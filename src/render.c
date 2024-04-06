@@ -97,58 +97,15 @@ void RenderTriangleWireframe(Triangle triangle) {
         points_vertex,
         4
     );
-    
-    SDL_Rect rect = GetTriangleRasterBoundaries(triangle);
-    SDL_Rect* rect_ptr = &rect;
-
-    SDL_SetRenderDrawColor(my_renderer, 0, 0, 255, 255);
-    SDL_RenderDrawRect(my_renderer, rect_ptr);
 }
 
 void RenderObjWireframe(Obj3D* obj) {
     for(int i = 0; i < obj->triangleCount; i++) {
         //back face culling (as normals are world centered, display negative dot prod. angles)
-        if(DotProductVec3(vector4DirectionZ, NormalToWorldCenter(obj, i)) < 3.0F) {
+        if(DotProductVec3(GetVector4Normalized(obj->meshBufferOut->triangle[i].center, vector4Null), NormalToWorldCenter(obj, i)) > 0.0F) {
             RenderTriangleWireframe(obj->meshProjected->triangle[i]);
         }
     }
-}
-
-
-
-//create boundaries fro triangles already translated and scaled to screen size and center
-SDL_Rect GetTriangleRasterBoundaries(Triangle triangle) {
-    int x_min, x_max = triangle.vertex[0].x;
-    int y_min, y_max = triangle.vertex[0].y;
-    SDL_Rect rasterBoundaires;
-
-    for(int i = 0; i < 2; i++) {
-        if(triangle.vertex[i+1].x > x_max) {
-            x_max = (int)triangle.vertex[i+1].x;
-        }
-        if(triangle.vertex[i+1].x < x_min) {
-            x_min = (int)triangle.vertex[i+1].x;
-        }
-        if(triangle.vertex[i+1].y > y_max) {
-            y_max = (int)triangle.vertex[i+1].y;
-        }
-        if(triangle.vertex[i+1].y < y_min) {
-            y_min = (int)triangle.vertex[i+1].y;
-        }
-    }
-
-    rasterBoundaires.x = x_min;
-    rasterBoundaires.y = y_min;
-    rasterBoundaires.h = y_max - y_min;
-    rasterBoundaires.w = x_max - x_min;
-
-    rasterBoundaires.x += 1.0F;
-    rasterBoundaires.y += 1.0F;
-
-    rasterBoundaires.h *= 0.5F * (WINDOW_HEIGHT);
-    rasterBoundaires.w *= 0.5F * (WINDOW_WIDTH);
-    return rasterBoundaires;
-
 }
 
 
