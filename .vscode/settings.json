@@ -7,6 +7,9 @@
         "setup.h": "c",
         "geometry_operations.h": "c",
         "import_mesh.h": "c",
-        "stdio.h": "c"
+        "stdio.h": "c",
+        "string.h": "c",
+        "render.h": "c",
+        "sdl.h": "c"
     }
 }
