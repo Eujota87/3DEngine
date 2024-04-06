@@ -34,6 +34,7 @@ struct triangle {
     Vector4 vertex[3];
     Vector4 center;
     Vector4 normal;
+    float shadeColor;
 };
 
 struct matrix4 {
@@ -53,6 +54,8 @@ struct obj3D {
     Mesh* meshBufferIn;
     Mesh* meshBufferOut;
     Mesh* meshProjected;
+    Mesh* mesh2DWindowSpace;
+    Mesh* mesh2DWindowSpaceZSorted;
 };
 
 #endif

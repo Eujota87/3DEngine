@@ -36,6 +36,10 @@ void setup(Mesh** my_mesh) {
     vector4DirectionZ.y = 0.0F;
     vector4DirectionZ.z = -1.0F;
     vector4DirectionZ.w = 0.0F;
+
+    lightDirection.x = 1.0F;
+    lightDirection.y = 1.0F;
+    lightDirection.z = -1.0F;
     
     //-----------------------------------------------------------------
 

@@ -21,6 +21,8 @@ Obj3D* CreateObj3D(Mesh* mesh) {
     obj->meshBufferIn = CreateMesh(mesh->triangleCount);
     obj->meshBufferOut = CreateMesh(mesh->triangleCount);
     obj->meshProjected = CreateMesh(mesh->triangleCount);
+    obj->mesh2DWindowSpace = CreateMesh(mesh->triangleCount);
+    obj->mesh2DWindowSpaceZSorted = CreateMesh(mesh->triangleCount);
     
     obj->pivot = vector4Null; //change this for a function calculating center of mass
     obj->triangleCount = mesh->triangleCount;

@@ -24,6 +24,8 @@ void ProjectObjMesh(Obj3D* obj, Matrix4 matrix);
 
 void UpdateTriangleCenter(Obj3D* obj);
 
+void UpdateObjMesh2D(Obj3D* obj);
+void UpdateObjMesh2DZsorted(Obj3D* obj);
 void PrintMeshData(Mesh* mesh);
 
 #endif

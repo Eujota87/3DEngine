@@ -7,8 +7,8 @@
 #include "./geometry_operations.h"
 #include "./render.h"
 
-void RenderTriangleWireframe(Triangle triangle);
-void RenderObjWireframe(Obj3D* obj);
+void RenderTriangle(Triangle triangle);
+void RenderObj(Obj3D* obj);
 SDL_Rect GetTriangleRasterBoundaries(Triangle triangle);
 
 void render() {
@@ -17,13 +17,13 @@ void render() {
     SDL_SetRenderDrawColor(my_renderer, 50, 50, 50, 255);
     SDL_RenderClear(my_renderer);
     
-    RenderObjWireframe(my_obj);
+    RenderObj(my_obj);
 
     SDL_RenderPresent(my_renderer); //swap buffer
 
 }
 
-void RenderTriangleWireframe(Triangle triangle) {
+void RenderTriangle(Triangle triangle) {
     Vector2 v1, v2, v3, center, normal;
     
     v1.x = triangle.vertex[0].x;
@@ -37,32 +37,6 @@ void RenderTriangleWireframe(Triangle triangle) {
     normal.x = triangle.normal.x;
     normal.y = triangle.normal.y;
     
-
-    //translate points from (-1,1) range to (0,2) range
-    v1.x += 1.0F;
-    v1.y += 1.0F;
-    v2.x += 1.0F;
-    v2.y += 1.0F;
-    v3.x += 1.0F;
-    v3.y += 1.0F;
-    center.x += 1.0F;
-    center.y += 1.0F;
-    normal.x += 1.0F;
-    normal.y += 1.0F;
-
-
-    //scale points based on windows size (divided by two as points range from 0 to 2)
-    v1.x *= 0.5F * (float)WINDOW_WIDTH;
-    v1.y *= 0.5F * (float)WINDOW_HEIGHT;
-    v2.x *= 0.5F * (float)WINDOW_WIDTH;
-    v2.y *= 0.5F * (float)WINDOW_HEIGHT;
-    v3.x *= 0.5F * (float)WINDOW_WIDTH;
-    v3.y *= 0.5F * (float)WINDOW_HEIGHT;
-    center.x *= 0.5F * (float)WINDOW_WIDTH;
-    center.y *= 0.5F * (float)WINDOW_HEIGHT;
-    normal.x *= 0.5F * (float)WINDOW_WIDTH;
-    normal.y *= 0.5F * (float)WINDOW_HEIGHT;
-
     SDL_Point p1, p2, p3;
     
     p1.x = v1.x;
@@ -72,7 +46,27 @@ void RenderTriangleWireframe(Triangle triangle) {
     p3.x = v3.x;
     p3.y = v3.y;
     
-    SDL_Point points_vertex[4] = {p1, p2, p3, p1};
+    int shadeColor = (int)((triangle.shadeColor + 1)/2 * 255.0F);
+    
+    SDL_Point points[4] = {p1, p2, p3, p1};
+    SDL_Vertex vertices[3] = {
+        {
+            {v1.x, v1.y},
+            {shadeColor, shadeColor, shadeColor, 255},
+            {0.0F, 0.0F}
+        },
+        {
+            {v2.x, v2.y},
+            {shadeColor, shadeColor, shadeColor, 255},
+            {0.0F, 0.0F}
+        },
+        {
+            {v3.x, v3.y},
+            {shadeColor, shadeColor, shadeColor, 255},
+            {0.0F, 0.0F}
+        },
+    };
+
 
     if(errorKey < 0) {
         //draw normals
@@ -85,7 +79,10 @@ void RenderTriangleWireframe(Triangle triangle) {
             (int)normal.y
         );
     }
+    
+    SDL_RenderGeometry(my_renderer, NULL, vertices, 3 ,NULL , 0);
 
+    /*
     //draw triangle center points
     SDL_SetRenderDrawColor(my_renderer, 255, 0, 0, 255);
     SDL_RenderDrawPoint(my_renderer, center.x, center.y);
@@ -94,17 +91,14 @@ void RenderTriangleWireframe(Triangle triangle) {
     SDL_SetRenderDrawColor(my_renderer, 0, 255, 0, 155);
     SDL_RenderDrawLines(
         my_renderer, 
-        points_vertex,
+        points,
         4
-    );
+    );*/
 }
 
-void RenderObjWireframe(Obj3D* obj) {
-    for(int i = 0; i < obj->triangleCount; i++) {
-        //back face culling (as normals are world centered, display negative dot prod. angles)
-        if(DotProductVec3(GetVector4Normalized(obj->meshBufferOut->triangle[i].center, vector4Null), NormalToWorldCenter(obj, i)) > 0.0F) {
-            RenderTriangleWireframe(obj->meshProjected->triangle[i]);
-        }
+void RenderObj(Obj3D* obj) {
+    for(int i = 0; i < obj->mesh2DWindowSpaceZSorted->triangleCount; i++) {
+        RenderTriangle(obj->mesh2DWindowSpaceZSorted->triangle[i]);
     }
 }
 

@@ -43,6 +43,9 @@ void update() {
 
     ProjectObjMesh(my_obj, projectionMatrix);
 
+    UpdateObjMesh2D(my_obj);
+
+    UpdateObjMesh2DZsorted(my_obj);
 }
 
 

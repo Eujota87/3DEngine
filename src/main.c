@@ -24,6 +24,7 @@ Obj3D* my_obj = NULL;
 Matrix4 projectionMatrix;
 Vector4 vector4Null;
 Vector4 vector4DirectionZ;
+Vector4 lightDirection;
 
 float zNear;
 float zFar;
