@@ -38,7 +38,7 @@ void setup(Mesh** my_mesh) {
     vector4DirectionZ.w = 0.0F;
 
     lightDirection.x = 1.0F;
-    lightDirection.y = 1.0F;
+    lightDirection.y = -1.0F; //final image is fliped vertically
     lightDirection.z = -1.0F;
     
     //-----------------------------------------------------------------
