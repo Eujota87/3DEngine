@@ -9,12 +9,11 @@
 
 void RenderTriangle(Triangle triangle);
 void RenderObj(Obj3D* obj);
-SDL_Rect GetTriangleRasterBoundaries(Triangle triangle);
 
 void render() {
     
     //render black screen
-    SDL_SetRenderDrawColor(my_renderer, 50, 50, 50, 255);
+    SDL_SetRenderDrawColor(my_renderer, 20, 20, 20, 255);
     SDL_RenderClear(my_renderer);
     
     RenderObj(my_obj);
@@ -46,9 +45,9 @@ void RenderTriangle(Triangle triangle) {
     p3.x = v3.x;
     p3.y = v3.y;
     
-    int shadeColor = (int)((triangle.shadeColor + 1)/2 * 255.0F);
-    
     SDL_Point points[4] = {p1, p2, p3, p1};
+    
+    int shadeColor = (int)((triangle.shadeColor + 1)/2 * 255.0F);
     SDL_Vertex vertices[3] = {
         {
             {v1.x, v1.y},
@@ -67,10 +66,12 @@ void RenderTriangle(Triangle triangle) {
         },
     };
 
+    //fill triangles
+    SDL_RenderGeometry(my_renderer, NULL, vertices, 3 ,NULL , 0);
 
-    if(errorKey < 0) {
+    if(debugKey1 > 0) {
         //draw normals
-        SDL_SetRenderDrawColor(my_renderer, 255, 255, 0 ,20);
+        SDL_SetRenderDrawColor(my_renderer, 255, 0, 0 ,255);
         SDL_RenderDrawLine(
             my_renderer,
             (int)center.x,
@@ -79,21 +80,21 @@ void RenderTriangle(Triangle triangle) {
             (int)normal.y
         );
     }
-    
-    SDL_RenderGeometry(my_renderer, NULL, vertices, 3 ,NULL , 0);
+    if(debugKey2 > 0) {
+        //draw triangle center points
+        SDL_SetRenderDrawColor(my_renderer, 0, 255, 0, 255);
+        SDL_RenderDrawPoint(my_renderer, center.x, center.y);
 
-    /*
-    //draw triangle center points
-    SDL_SetRenderDrawColor(my_renderer, 255, 0, 0, 255);
-    SDL_RenderDrawPoint(my_renderer, center.x, center.y);
-
-    //draw triangle wireframe
-    SDL_SetRenderDrawColor(my_renderer, 0, 255, 0, 155);
-    SDL_RenderDrawLines(
-        my_renderer, 
-        points,
-        4
-    );*/
+    }
+    if(debugKey3 > 0) {
+        //draw triangle wireframe
+        SDL_SetRenderDrawColor(my_renderer, 100, 100, 100, 255);
+        SDL_RenderDrawLines(
+            my_renderer, 
+            points,
+            4
+        );
+    }
 }
 
 void RenderObj(Obj3D* obj) {

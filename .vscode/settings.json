@@ -11,6 +11,7 @@
         "string.h": "c",
         "render.h": "c",
         "sdl.h": "c",
-        "limits": "c"
+        "limits": "c",
+        "stdlib.h": "c"
     }
 }

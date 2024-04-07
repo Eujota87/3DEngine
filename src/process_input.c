@@ -42,8 +42,14 @@ void process_input() {
                 inputRotateX += 1;
             if(event.key.keysym.sym == SDLK_s)
                 inputRotateX -= 1;
-            if(event.key.keysym.sym == SDLK_f)
-                errorKey *= -1;
+            if(event.key.keysym.sym == SDLK_1)
+                debugKey1 *= -1;
+            if(event.key.keysym.sym == SDLK_2)
+                debugKey2 *= -1;
+            if(event.key.keysym.sym == SDLK_3)
+                debugKey3 *= -1;
+            if(event.key.keysym.sym == SDLK_4)
+                debugKey4 *= -1;
             
             break;
         case SDL_KEYUP:
@@ -53,6 +59,9 @@ void process_input() {
             inputRotateX = inputRotateX;
             inputRotateY = 0;
             inputRotateZ = 0;
-            //errorKey = 0;
+            debugKey1 = debugKey1;
+            debugKey2 = debugKey2;
+            debugKey3 = debugKey3;
+            debugKey4 = debugKey4;
     }
 }

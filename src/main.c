@@ -38,7 +38,10 @@ float inputMoveZ = 0;
 float inputRotateX = 0;
 float inputRotateY = 0;
 float inputRotateZ = 0;
-int errorKey = 1;
+int debugKey1 = -1;
+int debugKey2 = -1;
+int debugKey3 = -1;
+int debugKey4 = -1;
 
 int main() {
     

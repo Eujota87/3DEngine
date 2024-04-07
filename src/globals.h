@@ -26,4 +26,7 @@ extern float inputMoveZ;
 extern float inputRotateX;
 extern float inputRotateY;
 extern float inputRotateZ;
-extern int errorKey;
+extern int debugKey1;
+extern int debugKey2;
+extern int debugKey3;
+extern int debugKey4;
