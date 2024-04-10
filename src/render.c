@@ -13,7 +13,7 @@ void RenderObj(Obj3D* obj);
 void render() {
     
     //render black screen
-    SDL_SetRenderDrawColor(my_renderer, 50, 50, 50, 255);
+    SDL_SetRenderDrawColor(my_renderer, 40 , 40, 40, 255);
     SDL_RenderClear(my_renderer);
     
     RenderObj(my_obj);
@@ -48,7 +48,9 @@ void RenderTriangle(Triangle triangle) {
     SDL_Point points[4] = {p1, p2, p3, p1};
     
     int shadeColor;
-    if(triangle.shadeColor < 0) shadeColor = 0;
+    if(triangle.shadeColor < 0) {
+        shadeColor = (int)(-triangle.shadeColor * 255.0F)/3;
+    } 
     else shadeColor = (int)(triangle.shadeColor * 255.0F);
     SDL_Vertex vertices[3] = {
         {

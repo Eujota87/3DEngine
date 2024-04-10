@@ -48,7 +48,7 @@ void setup(Mesh** my_mesh) {
 
     my_obj = CreateObj3D(*my_mesh);
 
-    my_obj->pivot.z += 6.0F;
+    my_obj->pivot.z += 4.0F;
 
 }
 
