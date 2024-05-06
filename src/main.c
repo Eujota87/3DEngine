@@ -43,11 +43,13 @@ int debugKey2 = -1;
 int debugKey3 = -1;
 int debugKey4 = -1;
 
+
+
 int main() {
     
     game_is_running  = initialize_window(&my_window, &my_renderer);
     
-    setup(&my_mesh);
+    setup();
 
     while(game_is_running) {
         process_input();

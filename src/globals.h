@@ -6,6 +6,7 @@ extern SDL_Renderer* my_renderer;
 
 extern int game_is_running;
 
+extern Mesh* my_mesh;
 extern Obj3D* my_obj;
 
 extern Matrix4 projectionMatrix;

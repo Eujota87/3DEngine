@@ -12,7 +12,7 @@
 #include "./setup.h"
 
 
-void setup(Mesh** my_mesh) {
+void setup() {
 
     zNear = 0.1f;
     zFar = 1000.0f;
@@ -43,10 +43,10 @@ void setup(Mesh** my_mesh) {
     
     //-----------------------------------------------------------------
 
-    *my_mesh = ImportMesh();
-    (*my_mesh)->pivot = vector4Null; //create function to calculate mesh center
+    my_mesh = ImportMesh();
+    my_mesh->pivot = vector4Null; //create function to calculate mesh center
 
-    my_obj = CreateObj3D(*my_mesh);
+    my_obj = CreateObj3D(my_mesh);
 
     my_obj->pivot.z += 4.0F;
 

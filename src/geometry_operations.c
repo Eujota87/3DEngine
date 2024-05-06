@@ -45,9 +45,9 @@ void TranslateObjToPivot(Obj3D* obj) {
     
     for(int i = 0; i < obj->triangleCount; i++) {
         for(int j = 0; j < 3; j++) {
+            obj->meshBufferIn->triangle[i].vertex[j].x = obj->meshBufferOut->triangle[i].vertex[j].x + obj->pivot.x;
             obj->meshBufferIn->triangle[i].vertex[j].y = obj->meshBufferOut->triangle[i].vertex[j].y + obj->pivot.y;
             obj->meshBufferIn->triangle[i].vertex[j].z = obj->meshBufferOut->triangle[i].vertex[j].z + obj->pivot.z;
-            obj->meshBufferIn->triangle[i].vertex[j].x = obj->meshBufferOut->triangle[i].vertex[j].x + obj->pivot.x;
         }
         
         obj->meshBufferIn->triangle[i].center.x = obj->meshBufferOut->triangle[i].center.x + obj->pivot.x;
@@ -73,11 +73,12 @@ void TranslateObjToWorldCenter(Obj3D* obj) {
     
     for(int i = 0; i < obj->triangleCount; i++) {
         for(int j = 0; j < 3; j++) {
+            obj->meshBufferIn->triangle[i].vertex[j].x = obj->meshBufferOut->triangle[i].vertex[j].x - obj->pivot.x;
             obj->meshBufferIn->triangle[i].vertex[j].y = obj->meshBufferOut->triangle[i].vertex[j].y - obj->pivot.y;
             obj->meshBufferIn->triangle[i].vertex[j].z = obj->meshBufferOut->triangle[i].vertex[j].z - obj->pivot.z;
-            obj->meshBufferIn->triangle[i].vertex[j].x = obj->meshBufferOut->triangle[i].vertex[j].x - obj->pivot.x;
         }
     }
+    
     //see later if I'll need to translate triangle centers and normals to world center as well
     obj->meshBufferOut = obj->meshBufferIn;
 
