@@ -36,12 +36,14 @@ void update() {
     RotateObj(my_obj, theta, 'x');
     RotateObj(my_obj, theta/2.0F, 'y');
     RotateObj(my_obj, theta/4.0F, 'z');
-    
+
     UpdateTriangleCenter(my_obj);
 
     TranslateObjToPivot(my_obj);
 
     ProjectObjMesh(my_obj, projectionMatrix);
+
+    LightingCalculation(my_obj);
 
     UpdateObjMesh2D(my_obj);
 

@@ -32,6 +32,7 @@ Mesh* ImportMesh() {
     triangleCount /= 12;
 
     fclose(file);
+    
     file = fopen("./assets/STLoutput.txt", "r");
 
     stl_mesh = CreateMesh(triangleCount);
@@ -102,6 +103,32 @@ Mesh* ImportMesh() {
     stl_mesh->pivot = vector4Null;
 
     fclose(file);
+
+    //Assign shared triangles index and shared triangle count to each vertex
+    for(int i = 0; i < stl_mesh->triangleCount; i++) {
+        stl_mesh->triangle[i].vertex[0].sharedTrianglesCount = 0;
+        stl_mesh->triangle[i].vertex[1].sharedTrianglesCount = 0;
+        stl_mesh->triangle[i].vertex[2].sharedTrianglesCount = 0;
+    }
+
+    for(int i = 0; i < stl_mesh->triangleCount; i++) {
+        for(int j = 0; j < 3; j++) {
+            for(int a = 0; a < stl_mesh->triangleCount; a++) {
+                for(int b = 0; b < 3; b++) {
+                    if(
+                        stl_mesh->triangle[i].vertex[j].x == stl_mesh->triangle[a].vertex[b].x &&
+                        stl_mesh->triangle[i].vertex[j].y == stl_mesh->triangle[a].vertex[b].y &&
+                        stl_mesh->triangle[i].vertex[j].z == stl_mesh->triangle[a].vertex[b].z
+                        ) {
+                            stl_mesh->triangle[i].vertex[j].sharedTrianglesIndex[ 
+                                stl_mesh->triangle[i].vertex[j].sharedTrianglesCount] = a;
+                            
+                            stl_mesh->triangle[i].vertex[j].sharedTrianglesCount++;
+                        }
+                }
+            }
+        }
+    }
 
     return stl_mesh;
 } 

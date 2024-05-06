@@ -257,18 +257,47 @@ void UpdateTriangleCenter(Obj3D* obj) {
     }
 }
 
+void LightingCalculation(Obj3D* obj) {
+     for(int i = 0; i < obj->triangleCount; i++) {
+        obj->meshProjected->triangle[i].shadeColor = (
+            DotProductVec3(NormalizeVector4(lightDirection), NormalToWorldCenter(obj, i))
+        );
+     }
+
+
+     for(int i = 0; i < obj->triangleCount; i++) {
+        for(int j = 0; j < 3; j++) {
+            
+            float shadeColorSum = 0;
+            int triangleCount = obj->meshImported->triangle[i].vertex[j].sharedTrianglesCount;
+            
+            for(int k = 0; k < triangleCount; k++) {
+                shadeColorSum += 
+                obj->meshProjected->triangle[
+                    obj->meshImported->triangle[i].vertex[j].sharedTrianglesIndex[k]].shadeColor;
+            }
+
+            obj->meshProjected->triangle[i].vertex[j].shadeColor = 
+            shadeColorSum / obj->meshImported->triangle[i].vertex[j].sharedTrianglesCount;
+        }
+     }
+
+}
+
 void UpdateObjMesh2D(Obj3D* obj) {
     int meshTriCount = 0;
+
+    for(int i = 0; i < obj->triangleCount; i++) {
+        for(int j = 0; j < 3; j++) {
+            obj->mesh2DWindowSpace->triangle[i].vertex[j].shadeColor = 
+            obj->meshProjected->triangle[i].vertex[j].shadeColor;
+        }
+    }    
 
     //backface culling
     for(int i = 0; i < obj->triangleCount; i++) {
         if(DotProductVec3(GetVector4Normalized(obj->meshBufferOut->triangle[i].center, vector4Null), NormalToWorldCenter(obj, i)) > 0.0F) {
             obj->mesh2DWindowSpace->triangle[meshTriCount] = obj->meshProjected->triangle[i];
-            
-            //lighting calculation
-            obj->mesh2DWindowSpace->triangle[meshTriCount].shadeColor = (
-                DotProductVec3(NormalizeVector4(lightDirection), NormalToWorldCenter(obj, i))
-            );
             
             meshTriCount++;
         }
@@ -307,6 +336,14 @@ void UpdateObjMesh2D(Obj3D* obj) {
 
 void UpdateObjMesh2DZsorted(Obj3D* obj) {
     
+    for(int i = 0; i < obj->triangleCount; i++) {
+        for(int j = 0; j < 3; j++) {
+            obj->mesh2DWindowSpaceZSorted->triangle[i].vertex[j].shadeColor = 
+            obj->mesh2DWindowSpace->triangle[i].vertex[j].shadeColor;
+            //fprintf(stderr, "%f\n", obj->mesh2DWindowSpaceZSorted->triangle[i].vertex[j].shadeColor);
+        }
+    }
+
     obj->mesh2DWindowSpaceZSorted->triangleCount = obj->mesh2DWindowSpace->triangleCount;
 
     for(int i = 0; i < obj->mesh2DWindowSpace->triangleCount; i++) {

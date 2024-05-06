@@ -28,6 +28,13 @@ struct vector4 {
     float y;
     float z;
     float w;
+    float shadeColor;
+    int sharedTrianglesCount;
+    int sharedTrianglesIndex[30]; //make it a dynamic vector later
+};
+
+struct matrix4 {
+    float m[4][4];
 };
 
 struct triangle {
@@ -35,10 +42,6 @@ struct triangle {
     Vector4 center;
     Vector4 normal;
     float shadeColor;
-};
-
-struct matrix4 {
-    float m[4][4];
 };
 
 struct mesh {
@@ -54,6 +57,8 @@ struct obj3D {
     Mesh* meshBufferIn;
     Mesh* meshBufferOut;
     Mesh* meshProjected;
+    
+    
     Mesh* mesh2DWindowSpace;
     Mesh* mesh2DWindowSpaceZSorted;
 };
