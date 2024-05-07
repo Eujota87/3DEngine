@@ -94,6 +94,15 @@ void RenderTriangle(Triangle triangle) {
         },
     };
 
+    if(debugKey4 > 0) {
+        for(int i = 0; i < 3; i++) {
+            vertices[i].color.r = shadeColor * baseColor.x;
+            vertices[i].color.g = shadeColor * baseColor.y;
+            vertices[i].color.b = shadeColor * baseColor.z;
+            vertices[i].color.a = 255;
+        }
+    }
+
     //fill triangles
     SDL_RenderGeometry(my_renderer, NULL, vertices, 3 ,NULL , 0);
 

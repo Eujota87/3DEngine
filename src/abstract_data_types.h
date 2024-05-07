@@ -30,7 +30,7 @@ struct vector4 {
     float w;
     float shadeColor;
     int sharedTrianglesCount;
-    int sharedTrianglesIndex[30]; //make it a dynamic vector later
+    int sharedTrianglesIndex[100]; //make it a dynamic vector later
 };
 
 struct matrix4 {
