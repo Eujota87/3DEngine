@@ -39,9 +39,9 @@ void process_input() {
             if(event.key.keysym.sym == SDLK_d)
                 inputRotateY = 1;
             if(event.key.keysym.sym == SDLK_w)
-                inputRotateX += 1;
+                inputRotateX = -1;
             if(event.key.keysym.sym == SDLK_s)
-                inputRotateX -= 1;
+                inputRotateX = 1;
             if(event.key.keysym.sym == SDLK_1)
                 debugKey1 *= -1;
             if(event.key.keysym.sym == SDLK_2)
@@ -56,7 +56,7 @@ void process_input() {
             inputMoveX = 0;
             inputMoveY = 0;
             inputMoveZ = 0;
-            inputRotateX = inputRotateX;
+            inputRotateX = 0;
             inputRotateY = 0;
             inputRotateZ = 0;
             debugKey1 = debugKey1;

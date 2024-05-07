@@ -47,7 +47,7 @@ int debugKey4 = -1;
 
 int main() {
     
-    game_is_running  = initialize_window(&my_window, &my_renderer);
+    game_is_running = initialize_window(&my_window, &my_renderer);
     
     setup();
 

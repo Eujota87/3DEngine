@@ -10,6 +10,9 @@
 int last_frame_time = 0;
 
 float theta = 0;
+float thetaX = 0;
+float thetaY = 0;
+float thetaZ = 0;
 
 void update() {
     
@@ -26,16 +29,19 @@ void update() {
 
     //-----------------------------------------------------------------
 
-    theta += 0.7F *delta_time;
+    //theta += 0.7F *delta_time;
+
+    thetaX += (0.7 * delta_time) * inputRotateX;
+    thetaY += (0.7 * delta_time) * inputRotateY;
 
     //clear mesh buffer everyframe
     my_obj->meshBufferOut = my_obj->meshImported;
     
     InputMoveObjPivot(my_obj, delta_time);
 
-    RotateObj(my_obj, theta, 'x');
-    RotateObj(my_obj, theta/2.0F, 'y');
-    RotateObj(my_obj, theta/4.0F, 'z');
+    RotateObj(my_obj, thetaX, 'x');
+    RotateObj(my_obj, thetaY, 'y');
+    RotateObj(my_obj, thetaZ, 'z');
 
     UpdateTriangleCenter(my_obj);
 
@@ -45,9 +51,11 @@ void update() {
 
     LightingCalculation(my_obj);
 
-    UpdateObjMesh2D(my_obj);
+    BackfaceCullingMesh2D(my_obj);
 
-    UpdateObjMesh2DZsorted(my_obj);
+    ResizeMesh2D(my_obj);
+
+    ZSortMesh2D(my_obj);
 }
 
 

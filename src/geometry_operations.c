@@ -258,12 +258,12 @@ void UpdateTriangleCenter(Obj3D* obj) {
 }
 
 void LightingCalculation(Obj3D* obj) {
+     
      for(int i = 0; i < obj->triangleCount; i++) {
         obj->meshProjected->triangle[i].shadeColor = (
             DotProductVec3(NormalizeVector4(lightDirection), NormalToWorldCenter(obj, i))
         );
      }
-
 
      for(int i = 0; i < obj->triangleCount; i++) {
         for(int j = 0; j < 3; j++) {
@@ -284,15 +284,8 @@ void LightingCalculation(Obj3D* obj) {
 
 }
 
-void UpdateObjMesh2D(Obj3D* obj) {
+void BackfaceCullingMesh2D(Obj3D* obj) {
     int meshTriCount = 0;
-
-    for(int i = 0; i < obj->triangleCount; i++) {
-        for(int j = 0; j < 3; j++) {
-            obj->mesh2DWindowSpace->triangle[i].vertex[j].shadeColor = 
-            obj->meshProjected->triangle[i].vertex[j].shadeColor;
-        }
-    }    
 
     //backface culling
     for(int i = 0; i < obj->triangleCount; i++) {
@@ -304,9 +297,11 @@ void UpdateObjMesh2D(Obj3D* obj) {
     }
     
     obj->mesh2DWindowSpace->triangleCount = meshTriCount;
+}
 
+void ResizeMesh2D(Obj3D* obj) {
     //translate and scale 2D coordinates
-    for(int i = 0; i < meshTriCount; i++) {
+    for(int i = 0; i < obj->mesh2DWindowSpace->triangleCount; i++) {
         //translate points from (-1,1) range to (0,2) range
         obj->mesh2DWindowSpace->triangle[i].vertex[0].x += 1.0F;
         obj->mesh2DWindowSpace->triangle[i].vertex[0].y += 1.0F;
@@ -334,15 +329,7 @@ void UpdateObjMesh2D(Obj3D* obj) {
     }
 }
 
-void UpdateObjMesh2DZsorted(Obj3D* obj) {
-    
-    for(int i = 0; i < obj->triangleCount; i++) {
-        for(int j = 0; j < 3; j++) {
-            obj->mesh2DWindowSpaceZSorted->triangle[i].vertex[j].shadeColor = 
-            obj->mesh2DWindowSpace->triangle[i].vertex[j].shadeColor;
-            //fprintf(stderr, "%f\n", obj->mesh2DWindowSpaceZSorted->triangle[i].vertex[j].shadeColor);
-        }
-    }
+void ZSortMesh2D(Obj3D* obj) {
 
     obj->mesh2DWindowSpaceZSorted->triangleCount = obj->mesh2DWindowSpace->triangleCount;
 

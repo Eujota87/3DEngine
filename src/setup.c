@@ -16,7 +16,7 @@ void setup() {
 
     zNear = 0.1f;
     zFar = 1000.0f;
-    fov = 65.0f;
+    fov = 40.0f;
     aspectRatio = (float)WINDOW_HEIGHT / (float)WINDOW_WIDTH;
     fovRad = 1.0f / tanf(fov * 0.5f / 180.0f * 3.14159f);
 
@@ -44,13 +44,10 @@ void setup() {
     //-----------------------------------------------------------------
 
     my_mesh = ImportMesh();
-    //my_mesh->pivot = vector4Null; //create function to calculate mesh center
-
 
     my_obj = CreateObj3D(my_mesh);
 
-
-    my_obj->pivot.z += 4.0F;
+    my_obj->pivot.z += 5.0F;
 
 }
 

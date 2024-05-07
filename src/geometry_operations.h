@@ -26,8 +26,9 @@ void UpdateTriangleCenter(Obj3D* obj);
 
 void LightingCalculation(Obj3D* obj);
 
-void UpdateObjMesh2D(Obj3D* obj);
-void UpdateObjMesh2DZsorted(Obj3D* obj);
+void BackfaceCullingMesh2D(Obj3D* obj);
+void ResizeMesh2D(Obj3D* obj);
+void ZSortMesh2D(Obj3D* obj);
 void PrintMeshData(Mesh* mesh);
 
 #endif
