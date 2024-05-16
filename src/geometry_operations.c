@@ -54,6 +54,7 @@ void TranslateObjToPivot(Obj3D* obj) {
         obj->meshBufferIn->triangle[i].center.y = obj->meshBufferOut->triangle[i].center.y + obj->pivot.y;
         obj->meshBufferIn->triangle[i].center.z = obj->meshBufferOut->triangle[i].center.z + obj->pivot.z;
 
+
         obj->meshBufferIn->triangle[i].normal.x = (
             obj->meshBufferOut->triangle[i].normal.x + obj->meshBufferIn->triangle[i].center.x
         );
@@ -233,7 +234,7 @@ Triangle ProjectTriangle(Triangle triangleIn, Matrix4 matrix) {
 
 void ProjectObjMesh(Obj3D* obj, Matrix4 matrix) {
     for(int i = 0; i < obj->triangleCount; i++) {
-        obj->meshProjected->triangle[i] = ProjectTriangle(obj->meshBufferOut->triangle[i], matrix);
+        obj->meshProjected->triangle[i] = ProjectTriangle(obj->meshBufferOut->triangle[i], matrix); 
     }
 }
 
@@ -258,20 +259,22 @@ void UpdateTriangleCenter(Obj3D* obj) {
 }
 
 void LightingCalculation(Obj3D* obj) {
-     
+
+    //triangle shade color
      for(int i = 0; i < obj->triangleCount; i++) {
         obj->meshProjected->triangle[i].shadeColor = (
-            DotProductVec3(NormalizeVector4(lightDirection), NormalToWorldCenter(obj, i))
+            DotProductVec3(NormalizeVector4(lightDirection), NormalizeVector4(NormalToWorldCenter(obj, i)))
         );
      }
 
+    //vertex shade color
      for(int i = 0; i < obj->triangleCount; i++) {
         for(int j = 0; j < 3; j++) {
             
             float shadeColorSum = 0;
-            int triangleCount = obj->meshImported->triangle[i].vertex[j].sharedTrianglesCount;
+            int sharedTriangleCount = obj->meshImported->triangle[i].vertex[j].sharedTrianglesCount;
             
-            for(int k = 0; k < triangleCount; k++) {
+            for(int k = 0; k < sharedTriangleCount; k++) {
                 shadeColorSum += 
                 obj->meshProjected->triangle[
                     obj->meshImported->triangle[i].vertex[j].sharedTrianglesIndex[k]].shadeColor;

@@ -13,7 +13,7 @@ void RenderObj(Obj3D* obj);
 void render() {
     
     //render black screen
-    SDL_SetRenderDrawColor(my_renderer, 40 , 40, 40, 255);
+    SDL_SetRenderDrawColor(my_renderer, 30 , 30, 30, 255);
     SDL_RenderClear(my_renderer);
     
     RenderObj(my_obj);
@@ -25,9 +25,9 @@ void render() {
 void RenderTriangle(Triangle triangle) {
     
     Vector3 baseColor;
-    baseColor.x = 0.1;
-    baseColor.y = 0.5;
-    baseColor.z = 0.8;
+    baseColor.x = 0.5;
+    baseColor.y = 0.2;
+    baseColor.z = 1.0;
     
     Vector4 v1, v2, v3;
     Vector2 center, normal;
@@ -55,17 +55,17 @@ void RenderTriangle(Triangle triangle) {
     SDL_Point points[4] = {p1, p2, p3, p1};
     
     if(triangle.vertex[0].shadeColor < 0) {
-        v1.shadeColor = (int)(-triangle.vertex[0].shadeColor * 255.0F)/3;
+        v1.shadeColor = (int)(-triangle.vertex[0].shadeColor * 255.0F)/2;
     } 
     else v1.shadeColor = (int)(triangle.vertex[0].shadeColor * 255.0F);
     
     if(triangle.vertex[1].shadeColor < 0) {
-        v2.shadeColor = (int)(-triangle.vertex[1].shadeColor * 255.0F)/3;
+        v2.shadeColor = (int)(-triangle.vertex[1].shadeColor * 255.0F)/2;
     } 
     else v2.shadeColor = (int)(triangle.vertex[1].shadeColor * 255.0F);
 
     if(triangle.vertex[2].shadeColor < 0) {
-        v3.shadeColor = (int)(-triangle.vertex[2].shadeColor * 255.0F)/3;
+        v3.shadeColor = (int)(-triangle.vertex[2].shadeColor * 255.0F)/2;
     } 
     else v3.shadeColor = (int)(triangle.vertex[2].shadeColor * 255.0F);
     
@@ -125,7 +125,7 @@ void RenderTriangle(Triangle triangle) {
     }
     if(debugKey3 > 0) {
         //draw triangle wireframe
-        SDL_SetRenderDrawColor(my_renderer, 30, 30, 30, 255);
+        SDL_SetRenderDrawColor(my_renderer, 210, 210, 210, 255);
         SDL_RenderDrawLines(
             my_renderer, 
             points,

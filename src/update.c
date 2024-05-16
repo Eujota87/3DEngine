@@ -29,7 +29,7 @@ void update() {
 
     //-----------------------------------------------------------------
 
-    //theta += 0.7F *delta_time;
+    theta += 0.7F *delta_time;
 
     thetaX += (0.7 * delta_time) * inputRotateX;
     thetaY += (0.7 * delta_time) * inputRotateY;
