@@ -24,52 +24,78 @@ void render() {
 
 void RenderTriangle(Triangle triangle) {
     
+    Vector3 finalColor[3];
     Vector3 baseColor;
-    baseColor.x = 0.5;
-    baseColor.y = 0.2;
-    baseColor.z = 1.0;
+    baseColor.x = 0.1F;
+    baseColor.y = 0.1F;
+    baseColor.z = 0.1F;
     
-    Vector4 v1, v2, v3;
+    Vector4 v[3];
     Vector2 center, normal;
     
-    v1.x = triangle.vertex[0].x;
-    v1.y = triangle.vertex[0].y;
-    v2.x = triangle.vertex[1].x;
-    v2.y = triangle.vertex[1].y;
-    v3.x = triangle.vertex[2].x;
-    v3.y = triangle.vertex[2].y;
+    v[0].x = triangle.vertex[0].x;
+    v[0].y = triangle.vertex[0].y;
+    v[1].x = triangle.vertex[1].x;
+    v[1].y = triangle.vertex[1].y;
+    v[2].x = triangle.vertex[2].x;
+    v[2].y = triangle.vertex[2].y;
     center.x = triangle.center.x;
     center.y = triangle.center.y;
     normal.x = triangle.normal.x;
     normal.y = triangle.normal.y;
+    v[0].specularColor = 0.0F;
+    v[1].specularColor = 0.0F;
+    v[2].specularColor = 0.0F;
+
     
     SDL_Point p1, p2, p3;
     
-    p1.x = v1.x;
-    p1.y = v1.y;
-    p2.x = v2.x;
-    p2.y = v2.y;
-    p3.x = v3.x;
-    p3.y = v3.y;
+    p1.x = v[0].x;
+    p1.y = v[0].y;
+    p2.x = v[1].x;
+    p2.y = v[1].y;
+    p3.x = v[2].x;
+    p3.y = v[2].y;
     
     SDL_Point points[4] = {p1, p2, p3, p1};
     
     if(triangle.vertex[0].shadeColor < 0) {
-        v1.shadeColor = (int)(-triangle.vertex[0].shadeColor * 255.0F)/2;
+        v[0].shadeColor = (int)(-triangle.vertex[0].shadeColor * 255.0F)/2;
     } 
-    else v1.shadeColor = (int)(triangle.vertex[0].shadeColor * 255.0F);
+    else v[0].shadeColor = (int)(triangle.vertex[0].shadeColor * 255.0F);
     
     if(triangle.vertex[1].shadeColor < 0) {
-        v2.shadeColor = (int)(-triangle.vertex[1].shadeColor * 255.0F)/2;
+        v[1].shadeColor = (int)(-triangle.vertex[1].shadeColor * 255.0F)/2;
     } 
-    else v2.shadeColor = (int)(triangle.vertex[1].shadeColor * 255.0F);
+    else v[1].shadeColor = (int)(triangle.vertex[1].shadeColor * 255.0F);
 
     if(triangle.vertex[2].shadeColor < 0) {
-        v3.shadeColor = (int)(-triangle.vertex[2].shadeColor * 255.0F)/2;
+        v[2].shadeColor = (int)(-triangle.vertex[2].shadeColor * 255.0F)/2;
     } 
-    else v3.shadeColor = (int)(triangle.vertex[2].shadeColor * 255.0F);
-    
+    else v[2].shadeColor = (int)(triangle.vertex[2].shadeColor * 255.0F);
 
+
+    float specAmount = 255.0F;
+    if(triangle.vertex[0].specularColor > 0) {
+        v[0].specularColor = (int)(triangle.vertex[0].specularColor * specAmount);
+    }
+    if(triangle.vertex[1].specularColor > 0) {
+        v[1].specularColor = (int)(triangle.vertex[1].specularColor * specAmount);
+    }
+    if(triangle.vertex[2].specularColor > 0) {
+        v[2].specularColor = (int)(triangle.vertex[2].specularColor * specAmount);
+    }
+
+    for(int i = 0; i < 3; i++) {
+        finalColor[i].x = (v[i].shadeColor * baseColor.x) + v[i].specularColor;
+        if(finalColor[i].x >= 255.0F) finalColor[i].x = 255.0F;
+        finalColor[i].y = (v[i].shadeColor * baseColor.y) + v[i].specularColor;
+        if(finalColor[i].y >= 255.0F) finalColor[i].y = 255.0F;
+        finalColor[i].z = (v[i].shadeColor * baseColor.z) + v[i].specularColor;
+        if(finalColor[i].z >= 255.0F) finalColor[i].z = 255.0F;
+    }
+
+    //triangle rendering
     int shadeColor;
     if(triangle.shadeColor < 0) {
         shadeColor = (int)(-triangle.shadeColor * 255.0F)/3;
@@ -78,30 +104,30 @@ void RenderTriangle(Triangle triangle) {
 
     SDL_Vertex vertices[3] = {
         {
-            {v1.x, v1.y},
-            {v1.shadeColor * baseColor.x, v1.shadeColor * baseColor.y, v1.shadeColor * baseColor.z, 255},
+            {v[0].x, v[0].y},
+            {finalColor[0].x, finalColor[0].y, finalColor[0].z, 255},
             {0.0F, 0.0F}
         },
         {
-            {v2.x, v2.y},
-            {v2.shadeColor * baseColor.x, v2.shadeColor * baseColor.y, v2.shadeColor * baseColor.z, 255},
+            {v[1].x, v[1].y},
+            {finalColor[1].x, finalColor[1].y, finalColor[1].z, 255},
             {0.0F, 0.0F}
         },
         {
-            {v3.x, v3.y},
-            {v3.shadeColor * baseColor.x, v3.shadeColor * baseColor.y, v3.shadeColor * baseColor.z, 255},
+            {v[2].x, v[2].y},
+            {finalColor[2].x, finalColor[2].y, finalColor[2].z, 255},
             {0.0F, 0.0F}
         },
     };
 
-    if(debugKey4 > 0) {
+    /*if(debugKey4 > 0) {
         for(int i = 0; i < 3; i++) {
             vertices[i].color.r = shadeColor * baseColor.x;
             vertices[i].color.g = shadeColor * baseColor.y;
             vertices[i].color.b = shadeColor * baseColor.z;
             vertices[i].color.a = 255;
         }
-    }
+    }*/
 
     //fill triangles
     SDL_RenderGeometry(my_renderer, NULL, vertices, 3 ,NULL , 0);

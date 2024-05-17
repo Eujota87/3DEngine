@@ -49,6 +49,8 @@ void update() {
 
     ProjectObjMesh(my_obj, projectionMatrix);
 
+    UpdateVertexNormal(my_obj);
+
     LightingCalculation(my_obj);
 
     BackfaceCullingMesh2D(my_obj);

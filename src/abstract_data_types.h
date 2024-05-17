@@ -28,7 +28,9 @@ struct vector4 {
     float y;
     float z;
     float w;
+    Vector3 normal;
     float shadeColor;
+    float specularColor;
     int sharedTrianglesCount;
     int sharedTrianglesIndex[100]; //make it a dynamic vector later
 };

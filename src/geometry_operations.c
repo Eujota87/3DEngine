@@ -35,7 +35,13 @@ float DotProductVec2(Vector4 vec1, Vector4 vec2) {
     return scalar;
 }
 
-float DotProductVec3(Vector4 vec1, Vector4 vec2) {
+float DotProductVec3(Vector4 vec1, Vector3 vec2) {
+    float scalar;
+    scalar = (vec1.x * vec2.x) + (vec1.y * vec2.y) + (vec1.z * vec2.z);
+    return scalar;
+}
+
+float DotProductVec4(Vector4 vec1, Vector4 vec2) {
     float scalar;
     scalar = (vec1.x * vec2.x) + (vec1.y * vec2.y) + (vec1.z * vec2.z);
     return scalar;
@@ -104,6 +110,22 @@ float GetVector4Length(Vector4 vecIn) {
     float length = sqrtf((vecIn.x * vecIn.x) + (vecIn.y * vecIn.y) + (vecIn.z * vecIn.z));
     return length;
 }
+
+float GetVector3Length(Vector3 vecIn) {
+    float length = sqrtf((vecIn.x * vecIn.x) + (vecIn.y * vecIn.y) + (vecIn.z * vecIn.z));
+    return length;
+}
+
+Vector3 NormalizeVector3(Vector3 vecIn) {
+    Vector3 vecOut;
+
+    vecOut.x = vecIn.x / GetVector3Length(vecIn);
+    vecOut.y = vecIn.y / GetVector3Length(vecIn);
+    vecOut.z = vecIn.z / GetVector3Length(vecIn);
+
+    return vecOut;
+}
+
 
 Vector4 NormalizeVector4(Vector4 vecIn) {
     Vector4 vecOut;
@@ -221,6 +243,26 @@ void RotateObj(Obj3D* obj, float degrees, char axis) {
     obj->meshBufferOut = obj->meshBufferIn;
 }
 
+void UpdateVertexNormal(Obj3D* obj) {
+for(int i = 0; i < obj->meshImported->triangleCount; i ++) {
+        for( int j = 0; j < 3; j++) {
+            for(int a = 0; a < obj->meshImported->triangle[i].vertex[j].sharedTrianglesCount; a++) {
+                Vector4 faceNormal = NormalToWorldCenter(obj, obj->meshImported->triangle[i].vertex[j].sharedTrianglesIndex[a]);
+                obj->meshImported->triangle[i].vertex[j].normal.x += 
+                faceNormal.x;
+                obj->meshImported->triangle[i].vertex[j].normal.y += 
+                faceNormal.y;
+                obj->meshImported->triangle[i].vertex[j].normal.z += 
+                faceNormal.z;
+            }
+            
+            obj->meshImported->triangle[i].vertex[j].normal = NormalizeVector3(obj->meshImported->triangle[i].vertex[j].normal);
+            
+        }
+    }
+
+}
+
 Triangle ProjectTriangle(Triangle triangleIn, Matrix4 matrix) {
     Triangle triangleOut;
     for(int i = 0; i < 3; i++) {
@@ -259,11 +301,57 @@ void UpdateTriangleCenter(Obj3D* obj) {
 }
 
 void LightingCalculation(Obj3D* obj) {
+    
+    //triangle shade color
+    for(int i = 0; i < obj->triangleCount; i++) {
+        for(int j = 0; j < 3; j++) {
+            obj->meshProjected->triangle[i].vertex[j].shadeColor = (
+                DotProductVec3(NormalizeVector4(lightDirection), 
+                NormalizeVector3(obj->meshImported->triangle[i].vertex[j].normal))
+            );
+        }
+    }
+    for(int i = 0; i < obj->triangleCount; i++) {
+        for(int j = 0; j < 3; j++) {
+            Vector4 reflection;
+            Vector4 projectLightToNormal;
+            float dotLightToNormal = 0;
+            dotLightToNormal = DotProductVec3(
+                NormalizeVector4(lightDirection),
+                NormalizeVector3(obj->meshImported->triangle[i].vertex[j].normal)
+            ); 
+            projectLightToNormal.x = 
+            obj->meshImported->triangle[i].vertex[j].normal.x * dotLightToNormal;
+            projectLightToNormal.y = 
+            obj->meshImported->triangle[i].vertex[j].normal.y * dotLightToNormal;
+            projectLightToNormal.z = 
+            obj->meshImported->triangle[i].vertex[j].normal.z * dotLightToNormal;
 
+            reflection.x =
+            -lightDirection.x + 2*(projectLightToNormal.x);
+            reflection.y =
+            -lightDirection.y + 2*(projectLightToNormal.y);
+            reflection.z =
+            -lightDirection.z + 2*(projectLightToNormal.z);
+            
+            Vector4 viewVector;
+            viewVector.x = -obj->meshBufferOut->triangle[i].center.x;
+            viewVector.y = -obj->meshBufferOut->triangle[i].center.y;
+            viewVector.z = -obj->meshBufferOut->triangle[i].center.z;
+
+            obj->meshProjected->triangle[i].vertex[j].specularColor =
+            DotProductVec4(
+                NormalizeVector4(viewVector),
+                NormalizeVector4(reflection)
+            );
+        }
+    }
+    
+    /*
     //triangle shade color
      for(int i = 0; i < obj->triangleCount; i++) {
         obj->meshProjected->triangle[i].shadeColor = (
-            DotProductVec3(NormalizeVector4(lightDirection), NormalizeVector4(NormalToWorldCenter(obj, i)))
+            DotProductVec4(NormalizeVector4(lightDirection), NormalizeVector4(NormalToWorldCenter(obj, i)))
         );
      }
 
@@ -283,7 +371,7 @@ void LightingCalculation(Obj3D* obj) {
             obj->meshProjected->triangle[i].vertex[j].shadeColor = 
             shadeColorSum / obj->meshImported->triangle[i].vertex[j].sharedTrianglesCount;
         }
-     }
+     }*/
 
 }
 
@@ -292,7 +380,7 @@ void BackfaceCullingMesh2D(Obj3D* obj) {
 
     //backface culling
     for(int i = 0; i < obj->triangleCount; i++) {
-        if(DotProductVec3(GetVector4Normalized(obj->meshBufferOut->triangle[i].center, vector4Null), NormalToWorldCenter(obj, i)) > 0.0F) {
+        if(DotProductVec4(GetVector4Normalized(obj->meshBufferOut->triangle[i].center, vector4Null), NormalToWorldCenter(obj, i)) > 0.0F) {
             obj->mesh2DWindowSpace->triangle[meshTriCount] = obj->meshProjected->triangle[i];
             
             meshTriCount++;
