@@ -42,7 +42,13 @@ int debugKey1 = -1;
 int debugKey2 = -1;
 int debugKey3 = -1;
 int debugKey4 = -1;
+int slider1 = 0;
+int slider2 = 0;
+int slider3 = 0;
 
+float renderSpecAmount = 0;
+float renderSpecLowLimit = 0;
+float renderShadowLowLimit = 0;
 
 
 int main() {

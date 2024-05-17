@@ -161,9 +161,9 @@ Vector4 NormalToWorldCenter(Obj3D* obj, int triangle_index) {
 
 void InputMoveObjPivot(Obj3D* obj, float delta_time) {
     
-    obj->pivot.x += 3.0 * inputMoveX * delta_time;
-    obj->pivot.y += 3.0 * inputMoveY * delta_time;
-    obj->pivot.z += 3.0 * inputMoveZ * delta_time;
+    obj->pivot.x += 1.0 * inputMoveX * delta_time;
+    obj->pivot.y += 1.0 * inputMoveY * delta_time;
+    obj->pivot.z += 1.0 * inputMoveZ * delta_time;
     
 }
 

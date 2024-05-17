@@ -51,6 +51,18 @@ void process_input() {
             if(event.key.keysym.sym == SDLK_4)
                 debugKey4 *= -1;
             
+            if(event.key.keysym.sym == SDLK_z)
+                slider1 = -1;
+            if(event.key.keysym.sym == SDLK_x)
+                slider1 = 1;
+            if(event.key.keysym.sym == SDLK_c)
+                slider2 = -1;
+            if(event.key.keysym.sym == SDLK_v)
+                slider2 = 1;
+            if(event.key.keysym.sym == SDLK_b)
+                slider3 = -1;
+            if(event.key.keysym.sym == SDLK_n)
+                slider3 = 1;
             break;
         case SDL_KEYUP:
             inputMoveX = 0;
@@ -63,5 +75,8 @@ void process_input() {
             debugKey2 = debugKey2;
             debugKey3 = debugKey3;
             debugKey4 = debugKey4;
+            slider1 = 0;
+            slider2 = 0;
+            slider3 = 0;
     }
 }

@@ -31,3 +31,11 @@ extern int debugKey1;
 extern int debugKey2;
 extern int debugKey3;
 extern int debugKey4;
+
+extern int slider1;
+extern int slider2;
+extern int slider3;
+
+extern float renderSpecAmount;
+extern float renderSpecLowLimit;
+extern float renderShadowLowLimit;

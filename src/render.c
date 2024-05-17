@@ -26,9 +26,16 @@ void RenderTriangle(Triangle triangle) {
     
     Vector3 finalColor[3];
     Vector3 baseColor;
-    baseColor.x = 0.1F;
-    baseColor.y = 0.1F;
-    baseColor.z = 0.1F;
+    baseColor.x = 0.8F;
+    baseColor.y = 0.2F;
+    baseColor.z = 0.4F;
+    float specAmount = 100.0F + renderSpecAmount*255.0F;
+    float specLowLimit = 0.0F + renderSpecLowLimit;
+    float shadowLowLimit = 0.1F + renderShadowLowLimit; 
+
+    if(specAmount < 0) specAmount = 0;
+    if(specLowLimit < 0) specLowLimit = 0;
+    if(shadowLowLimit < 0) shadowLowLimit = 0;   
     
     Vector4 v[3];
     Vector2 center, normal;
@@ -59,30 +66,34 @@ void RenderTriangle(Triangle triangle) {
     
     SDL_Point points[4] = {p1, p2, p3, p1};
     
+    for(int i = 0; i < 3; i++) {
+        triangle.vertex[i].shadeColor = (triangle.vertex[i].shadeColor + shadowLowLimit) / (1+shadowLowLimit);
+    }
+
+
     if(triangle.vertex[0].shadeColor < 0) {
-        v[0].shadeColor = (int)(-triangle.vertex[0].shadeColor * 255.0F)/2;
+        v[0].shadeColor = (int)(-triangle.vertex[0].shadeColor * 255.0F);
     } 
     else v[0].shadeColor = (int)(triangle.vertex[0].shadeColor * 255.0F);
     
     if(triangle.vertex[1].shadeColor < 0) {
-        v[1].shadeColor = (int)(-triangle.vertex[1].shadeColor * 255.0F)/2;
+        v[1].shadeColor = (int)(-triangle.vertex[1].shadeColor * 255.0F);
     } 
     else v[1].shadeColor = (int)(triangle.vertex[1].shadeColor * 255.0F);
 
     if(triangle.vertex[2].shadeColor < 0) {
-        v[2].shadeColor = (int)(-triangle.vertex[2].shadeColor * 255.0F)/2;
+        v[2].shadeColor = (int)(-triangle.vertex[2].shadeColor * 255.0F);
     } 
     else v[2].shadeColor = (int)(triangle.vertex[2].shadeColor * 255.0F);
 
 
-    float specAmount = 255.0F;
-    if(triangle.vertex[0].specularColor > 0) {
+    if(triangle.vertex[0].specularColor > specLowLimit) {
         v[0].specularColor = (int)(triangle.vertex[0].specularColor * specAmount);
     }
-    if(triangle.vertex[1].specularColor > 0) {
+    if(triangle.vertex[1].specularColor > specLowLimit) {
         v[1].specularColor = (int)(triangle.vertex[1].specularColor * specAmount);
     }
-    if(triangle.vertex[2].specularColor > 0) {
+    if(triangle.vertex[2].specularColor > specLowLimit) {
         v[2].specularColor = (int)(triangle.vertex[2].specularColor * specAmount);
     }
 
@@ -120,14 +131,14 @@ void RenderTriangle(Triangle triangle) {
         },
     };
 
-    /*if(debugKey4 > 0) {
+    if(debugKey4 > 0) {
         for(int i = 0; i < 3; i++) {
             vertices[i].color.r = shadeColor * baseColor.x;
             vertices[i].color.g = shadeColor * baseColor.y;
             vertices[i].color.b = shadeColor * baseColor.z;
             vertices[i].color.a = 255;
         }
-    }*/
+    }
 
     //fill triangles
     SDL_RenderGeometry(my_renderer, NULL, vertices, 3 ,NULL , 0);
