@@ -18,7 +18,7 @@ extern Vector4 lightDirection;
 extern float zNear;
 extern float zFar;
 extern float fov;
-extern float aspectRatio;
+extern float aSpeculartRatio;
 extern float fovRad;
 
 extern float inputMoveX;
@@ -36,6 +36,6 @@ extern int slider1;
 extern int slider2;
 extern int slider3;
 
-extern float renderSpecAmount;
-extern float renderSpecLowLimit;
+extern float renderSpecularAmount;
+extern float renderSpecularLowLimit;
 extern float renderShadowLowLimit;

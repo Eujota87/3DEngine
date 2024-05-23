@@ -29,12 +29,12 @@ void RenderTriangle(Triangle triangle) {
     baseColor.x = 0.8F;
     baseColor.y = 0.2F;
     baseColor.z = 0.4F;
-    float specAmount = 100.0F + renderSpecAmount*255.0F;
-    float specLowLimit = 0.0F + renderSpecLowLimit;
+    float SpecularAmount = 100.0F + renderSpecularAmount*255.0F;
+    float SpecularLowLimit = 0.0F + renderSpecularLowLimit;
     float shadowLowLimit = 0.1F + renderShadowLowLimit; 
 
-    if(specAmount < 0) specAmount = 0;
-    if(specLowLimit < 0) specLowLimit = 0;
+    if(SpecularAmount < 0) SpecularAmount = 0;
+    if(SpecularLowLimit < 0) SpecularLowLimit = 0;
     if(shadowLowLimit < 0) shadowLowLimit = 0;   
     
     Vector4 v[3];
@@ -50,9 +50,9 @@ void RenderTriangle(Triangle triangle) {
     center.y = triangle.center.y;
     normal.x = triangle.normal.x;
     normal.y = triangle.normal.y;
-    v[0].specularColor = 0.0F;
-    v[1].specularColor = 0.0F;
-    v[2].specularColor = 0.0F;
+    v[0].SpecularularColor = 0.0F;
+    v[1].SpecularularColor = 0.0F;
+    v[2].SpecularularColor = 0.0F;
 
     
     SDL_Point p1, p2, p3;
@@ -87,22 +87,22 @@ void RenderTriangle(Triangle triangle) {
     else v[2].shadeColor = (int)(triangle.vertex[2].shadeColor * 255.0F);
 
 
-    if(triangle.vertex[0].specularColor > specLowLimit) {
-        v[0].specularColor = (int)(triangle.vertex[0].specularColor * specAmount);
+    if(triangle.vertex[0].SpecularularColor > SpecularLowLimit) {
+        v[0].SpecularularColor = (int)(triangle.vertex[0].SpecularularColor * SpecularAmount);
     }
-    if(triangle.vertex[1].specularColor > specLowLimit) {
-        v[1].specularColor = (int)(triangle.vertex[1].specularColor * specAmount);
+    if(triangle.vertex[1].SpecularularColor > SpecularLowLimit) {
+        v[1].SpecularularColor = (int)(triangle.vertex[1].SpecularularColor * SpecularAmount);
     }
-    if(triangle.vertex[2].specularColor > specLowLimit) {
-        v[2].specularColor = (int)(triangle.vertex[2].specularColor * specAmount);
+    if(triangle.vertex[2].SpecularularColor > SpecularLowLimit) {
+        v[2].SpecularularColor = (int)(triangle.vertex[2].SpecularularColor * SpecularAmount);
     }
 
     for(int i = 0; i < 3; i++) {
-        finalColor[i].x = (v[i].shadeColor * baseColor.x) + v[i].specularColor;
+        finalColor[i].x = (v[i].shadeColor * baseColor.x) + v[i].SpecularularColor;
         if(finalColor[i].x >= 255.0F) finalColor[i].x = 255.0F;
-        finalColor[i].y = (v[i].shadeColor * baseColor.y) + v[i].specularColor;
+        finalColor[i].y = (v[i].shadeColor * baseColor.y) + v[i].SpecularularColor;
         if(finalColor[i].y >= 255.0F) finalColor[i].y = 255.0F;
-        finalColor[i].z = (v[i].shadeColor * baseColor.z) + v[i].specularColor;
+        finalColor[i].z = (v[i].shadeColor * baseColor.z) + v[i].SpecularularColor;
         if(finalColor[i].z >= 255.0F) finalColor[i].z = 255.0F;
     }
 

@@ -1,4 +1,3 @@
-
 #include <stdio.h>
 #include <SDL2/SDL.h>
 #include <stdlib.h>
@@ -339,7 +338,7 @@ void LightingCalculation(Obj3D* obj) {
             viewVector.y = -obj->meshBufferOut->triangle[i].center.y;
             viewVector.z = -obj->meshBufferOut->triangle[i].center.z;
 
-            obj->meshProjected->triangle[i].vertex[j].specularColor =
+            obj->meshProjected->triangle[i].vertex[j].SpecularularColor =
             DotProductVec4(
                 NormalizeVector4(viewVector),
                 NormalizeVector4(reflection)

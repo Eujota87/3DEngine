@@ -29,7 +29,7 @@ Vector4 lightDirection;
 float zNear;
 float zFar;
 float fov;
-float aspectRatio;
+float aSpeculartRatio;
 float fovRad;
 
 float inputMoveX = 0;
@@ -46,8 +46,8 @@ int slider1 = 0;
 int slider2 = 0;
 int slider3 = 0;
 
-float renderSpecAmount = 0;
-float renderSpecLowLimit = 0;
+float renderSpecularAmount = 0;
+float renderSpecularLowLimit = 0;
 float renderShadowLowLimit = 0;
 
 

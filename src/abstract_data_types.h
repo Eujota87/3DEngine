@@ -30,7 +30,7 @@ struct vector4 {
     float w;
     Vector3 normal;
     float shadeColor;
-    float specularColor;
+    float SpecularularColor;
     int sharedTrianglesCount;
     int sharedTrianglesIndex[100]; //make it a dynamic vector later
 };

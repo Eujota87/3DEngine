@@ -34,8 +34,8 @@ void update() {
     thetaX += (0.7 * delta_time) * inputRotateX;
     thetaY += (0.7 * delta_time) * inputRotateY;
 
-    renderSpecAmount += (0.5 * delta_time) * slider1;
-    renderSpecLowLimit += (0.5 * delta_time) * slider2;
+    renderSpecularAmount += (0.5 * delta_time) * slider1;
+    renderSpecularLowLimit += (0.5 * delta_time) * slider2;
     renderShadowLowLimit += (0.5 * delta_time) * slider3;
 
 

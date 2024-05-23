@@ -17,10 +17,10 @@ void setup() {
     zNear = 0.1f;
     zFar = 1000.0f;
     fov = 40.0f;
-    aspectRatio = (float)WINDOW_HEIGHT / (float)WINDOW_WIDTH;
+    aSpeculartRatio = (float)WINDOW_HEIGHT / (float)WINDOW_WIDTH;
     fovRad = 1.0f / tanf(fov * 0.5f / 180.0f * 3.14159f);
 
-    projectionMatrix.m[0][0] = aspectRatio * fovRad;
+    projectionMatrix.m[0][0] = aSpeculartRatio * fovRad;
     projectionMatrix.m[1][1] = fovRad;
     projectionMatrix.m[2][2] = zFar / (zFar-zNear);
     projectionMatrix.m[2][3] = (-zFar * zNear) / (zFar-zNear);
