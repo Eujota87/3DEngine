@@ -5,10 +5,8 @@
 #include "./globals.h"
 #include "./abstract_data_types.h"
 #include "./geometry_operations.h"
+#include "./mesh_operations.h"
 #include "./render.h"
-
-void RenderTriangle(Triangle triangle);
-void RenderObj(Obj3D* obj);
 
 void render() {
     
@@ -178,3 +176,77 @@ void RenderObj(Obj3D* obj) {
 }
 
 
+void LightingCalculation(Obj3D* obj) {
+    
+    //triangle shade color
+    for(int i = 0; i < obj->triangleCount; i++) {
+        for(int j = 0; j < 3; j++) {
+            obj->meshProjected->triangle[i].vertex[j].shadeColor = (
+                DotProductVec4x3(NormalizeVector4(lightDirection), 
+                NormalizeVector3(obj->meshImported->triangle[i].vertex[j].normal))
+            );
+        }
+    }
+    for(int i = 0; i < obj->triangleCount; i++) {
+        for(int j = 0; j < 3; j++) {
+            Vector4 reflection;
+            Vector4 projectLightToNormal;
+            float dotLightToNormal = 0;
+            dotLightToNormal = DotProductVec4x3(
+                NormalizeVector4(lightDirection),
+                NormalizeVector3(obj->meshImported->triangle[i].vertex[j].normal)
+            ); 
+            projectLightToNormal.x = 
+            obj->meshImported->triangle[i].vertex[j].normal.x * dotLightToNormal;
+            projectLightToNormal.y = 
+            obj->meshImported->triangle[i].vertex[j].normal.y * dotLightToNormal;
+            projectLightToNormal.z = 
+            obj->meshImported->triangle[i].vertex[j].normal.z * dotLightToNormal;
+
+            reflection.x =
+            -lightDirection.x + 2*(projectLightToNormal.x);
+            reflection.y =
+            -lightDirection.y + 2*(projectLightToNormal.y);
+            reflection.z =
+            -lightDirection.z + 2*(projectLightToNormal.z);
+            
+            Vector4 viewVector;
+            viewVector.x = -obj->meshBufferOut->triangle[i].center.x;
+            viewVector.y = -obj->meshBufferOut->triangle[i].center.y;
+            viewVector.z = -obj->meshBufferOut->triangle[i].center.z;
+
+            obj->meshProjected->triangle[i].vertex[j].SpecularularColor =
+            DotProductVec4(
+                NormalizeVector4(viewVector),
+                NormalizeVector4(reflection)
+            );
+        }
+    }
+    
+    /*
+    //triangle shade color
+     for(int i = 0; i < obj->triangleCount; i++) {
+        obj->meshProjected->triangle[i].shadeColor = (
+            DotProductVec4(NormalizeVector4(lightDirection), NormalizeVector4(NormalToWorldCenter(obj, i)))
+        );
+     }
+
+    //vertex shade color
+     for(int i = 0; i < obj->triangleCount; i++) {
+        for(int j = 0; j < 3; j++) {
+            
+            float shadeColorSum = 0;
+            int sharedTriangleCount = obj->meshImported->triangle[i].vertex[j].sharedTrianglesCount;
+            
+            for(int k = 0; k < sharedTriangleCount; k++) {
+                shadeColorSum += 
+                obj->meshProjected->triangle[
+                    obj->meshImported->triangle[i].vertex[j].sharedTrianglesIndex[k]].shadeColor;
+            }
+
+            obj->meshProjected->triangle[i].vertex[j].shadeColor = 
+            shadeColorSum / obj->meshImported->triangle[i].vertex[j].sharedTrianglesCount;
+        }
+     }*/
+
+}

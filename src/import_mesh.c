@@ -8,6 +8,7 @@
 #include "./globals.h"
 #include "./abstract_data_types.h"
 #include "./geometry_operations.h"
+#include "./mesh_operations.h"
 
 Mesh* ImportMesh() {
     Mesh* stl_mesh;

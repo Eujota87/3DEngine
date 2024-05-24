@@ -3,6 +3,7 @@
 
 #include "./abstract_data_types.h"
 #include "./geometry_operations.h"
+#include "./mesh_operations.h"
 #include "./constants.h"
 #include "./globals.h"
 

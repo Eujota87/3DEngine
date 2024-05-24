@@ -1,5 +1,6 @@
 #include "./abstract_data_types.h"
 #include "./geometry_operations.h"
+#include "./mesh_operations.h"
 
 extern SDL_Window* my_window;
 extern SDL_Renderer* my_renderer;

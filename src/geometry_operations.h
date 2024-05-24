@@ -5,7 +5,7 @@ Vector4 MulMatrix4Vector3(Vector4 vecIn, Matrix4 mat4);
 
 //fix this mess
 float DotProductVec2(Vector4 vec1, Vector4 vec2);
-float DotProductVec3(Vector4 vec1, Vector3 vec2);
+float DotProductVec4x3(Vector4 vec1, Vector3 vec2);
 float DotProductVec4(Vector4 vec1, Vector4 vec2);
 
 void TranslateObjToPivot(Obj3D* obj);
@@ -26,16 +26,10 @@ void RotateObj(Obj3D* obj, float degrees, char axis);
 
 void UpdateVertexNormal(Obj3D* obj);
 
-Triangle ProjectTriangle(Triangle triangleIn, Matrix4 matrix);
-void ProjectObjMesh(Obj3D* obj, Matrix4 matrix);
 
 void UpdateTriangleCenter(Obj3D* obj);
 
-void LightingCalculation(Obj3D* obj);
 
-void BackfaceCullingMesh2D(Obj3D* obj);
-void ResizeMesh2D(Obj3D* obj);
-void ZSortMesh2D(Obj3D* obj);
-void PrintMeshData(Mesh* mesh);
+
 
 #endif

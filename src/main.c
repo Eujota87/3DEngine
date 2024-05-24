@@ -7,10 +7,12 @@
 #include "./globals.h"
 #include "./abstract_data_types.h"
 #include "./geometry_operations.h"
+#include "./mesh_operations.h"
 #include "./init_and_destroy.h"
 #include "./setup.h"
 #include "./process_input.h"
 #include "./update.h"
+#include "./render.h"
 #include "./render.h"
 
 SDL_Window* my_window = NULL;

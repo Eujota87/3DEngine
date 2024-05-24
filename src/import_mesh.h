@@ -1,5 +1,6 @@
 #include "./abstract_data_types.h"
 #include "./geometry_operations.h"
+#include "./mesh_operations.h"
 
 #ifndef IMPORT_MESH
 #define IMPORT_MESH

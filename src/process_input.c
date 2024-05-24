@@ -5,6 +5,7 @@
 #include "./constants.h"
 #include "./abstract_data_types.h"
 #include "./geometry_operations.h"
+#include "./mesh_operations.h"
 #include "./process_input.h"
 
 void process_input() {
