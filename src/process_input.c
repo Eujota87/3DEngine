@@ -1,6 +1,5 @@
 #include <stdio.h>
-#include <SDL.h>
-
+#include "C:\SDL2\x86_64-w64-mingw32\include\SDL2\SDL.h"
 #include "./globals.h"
 #include "./constants.h"
 #include "./abstract_data_types.h"

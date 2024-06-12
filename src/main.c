@@ -1,5 +1,5 @@
 #include <stdio.h>
-#include <SDL.h>
+#include "C:\SDL2\x86_64-w64-mingw32\include\SDL2\SDL.h"
 #include <stdlib.h>
 #include <string.h>
 
@@ -53,7 +53,11 @@ float renderSpecularLowLimit = 0;
 float renderShadowLowLimit = 0;
 
 
-int main() {
+int SDL_main(int argc, char* argv[]) {
+    if (SDL_Init(SDL_INIT_VIDEO) != 0) {
+        SDL_Log("Unable to initialize SDL: %s", SDL_GetError());
+        return 1;
+    }
     
     game_is_running = initialize_window(&my_window, &my_renderer);
     
@@ -66,6 +70,6 @@ int main() {
     }
     
     destroy_window(my_window, my_renderer);
-
+    SDL_Quit();
     return 0;
 }

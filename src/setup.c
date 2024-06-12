@@ -1,5 +1,5 @@
 #include <stdio.h>
-#include <SDL.h>
+#include "C:\SDL2\x86_64-w64-mingw32\include\SDL2\SDL.h"
 #include <stdlib.h>
 #include <string.h>
 #include <math.h>
