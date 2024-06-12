@@ -1,5 +1,5 @@
 #include <stdio.h>
-#include <SDL2/SDL.h>
+#include <SDL.h>
 
 #include "./abstract_data_types.h"
 #include "./geometry_operations.h"
