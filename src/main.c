@@ -1,5 +1,7 @@
 #include <stdio.h>
-#include "C:\SDL2\x86_64-w64-mingw32\include\SDL2\SDL.h"
+//#include "C:/SDL2/include/SDL.h"
+#include "C:/SDL2/include/SDL.h"
+//gcc -std=c99 ./src/*.c -IC:\SDL2\x86_64-w64-mingw32\include\SDL2 -LC:\SDL2\x86_64-w64-mingw32\lib -lmingw32 -lSDL2main -lSDL2 -o engine3d
 #include <stdlib.h>
 #include <string.h>
 
