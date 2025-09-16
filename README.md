@@ -2,6 +2,12 @@
 
 A simple 3D engine developed in C using the SDL2 library. The engine implements basic 3D rendering techniques, including wireframe and smooth rendering and object transformations.
 
+![Engine Previes Image](1721696471114.jpeg)
+
+![Engine Previes Image](1721696471135.jpeg)
+
+![Engine Previes Image](1721696471345.jpeg)
+
 ## Features
 - **Backface culling**
 - **Z-sorting**
